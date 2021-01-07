@@ -20,9 +20,9 @@
 
 # Define function
 now<-function(){
-  broken<-breakdown.string(Sys.time())
-  string<-broken$vect[broken$num]
-  return(paste(string, collapse = ""))
+  broken<-breakdown.string(as.character(Sys.time()))
+  string<-paste(broken$vect[broken$num], collapse = "")
+  return(string)
 }
 
 # Explore and plot data

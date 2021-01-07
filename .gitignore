@@ -1,0 +1,12 @@
+# ignore automatically created archive files ending in .o or .a with:
+*.[oa]
+
+# ignore linux tmp files ending with ~
+*~
+
+# ignore windows tmp files starting with ~$
+~$*
+
+# ignore all .pdf files in the doc/ directory and any of its subdirectories
+doc/**/*.pdf
+

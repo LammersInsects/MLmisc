@@ -20,6 +20,9 @@
 
 # Define function
 NA.harmonizer<-function(dataframe){
+  if(class(dataframe)!='data.frame'){
+    stop('ERROR: This function is written for data frames only. Functionality for other data formats is not tested so not recommended.')
+  }
   df<-dataframe
   #NAs typed into Excel are often not recognised, so replace
   df[sapply(df,function(x){as.character(x)=='NA' & !is.na(x)})]<-NA 

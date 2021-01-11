@@ -19,8 +19,12 @@
 
 # Define function
 time.passed<-function(start, end, return.it=F){
-  tp<-strptime(x = end, format = '%Y%m%d%H%M%S') - strptime(x = start, format = '%Y%m%d%H%M%S')
-  print(tp)
+  tp<-difftime(strptime(x = end, format = '%Y%m%d%H%M%S'), strptime(x = start, format = '%Y%m%d%H%M%S'))
+  if((as.numeric(end)-as.numeric(start))<60000){
+    tp<-(as.numeric(end)-as.numeric(start))/1000
+    tp<-as.difftime(tp, units = 'secs')
+  }
+  print(paste('Time passed:',format(tp)))
   if(return.it){
     return(tp)
   }

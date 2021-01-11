@@ -22,7 +22,8 @@
 write.default.xlsx<-function(dataframe,
                              file=NA,
                              filename=paste(today,'debugging','xlsx',sep='.'),
-                             colwidths=c()
+                             colwidths=c(),
+                             extra.header.info=NA
 ){
   print('This function expects a any dataframe with a limited number of columns')
   print('Header is compulsory')
@@ -75,7 +76,7 @@ write.default.xlsx<-function(dataframe,
                 titleStyle = TITLE_STYLE)
   # Add sub title
   xlsx.addTitle(sheet, rowIndex=2, 
-                title=paste('Last processed:',Sys.time()),
+                title=paste(extra.header.info, '  |   Last processed:',Sys.time()),
                 titleStyle = SUB_TITLE_STYLE)
   # Add a table
   addDataFrame(dataframe, sheet, startRow=3, startColumn=1, row.names = FALSE,

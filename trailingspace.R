@@ -5,8 +5,8 @@
 
 trailingspace<-function(x){
   y<-x
-  trailing.space<-lapply(x,function(v){substr(v,nchar(v),nchar(v)+1)})==' '
-  trailing.space<-ifelse(is.na(trailing.space),F,trailing.space)
-  y[trailing.space]<-sapply(x[trailing.space],function(f){substr(f,1,nchar(f)-1)})
+  trailing.space<-lapply(x,function(v){substr(v,nchar(v),nchar(v)+1)})==' ' #test whether the last character is a space
+  trailing.space<-ifelse(is.na(trailing.space),F,trailing.space) #if a value is NA, than include FALSE in the test vector
+  y[trailing.space]<-sapply(x[trailing.space],function(f){substr(f,1,nchar(f)-1)}) #for values with a trailing space, rm last character
   return(unlist(y))
 }

@@ -39,6 +39,7 @@ write.default.xlsx<-function(dataframe,
   
   #column widths
   #TODO #test what happens if no input is given presently
+  #from experience I'd say that if not enough column widths are given, the extra columns are dropped
   
   #extra header info for the subtitle
   if(!is.na(extra.header.info[1])){

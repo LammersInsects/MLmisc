@@ -25,15 +25,10 @@ find.functions<-function(character.vector){
   
   #detect which of these are known functions
   load.find.functions()
-  res.findfun<-sapply(components.s,find_funs)
   
-  # for(i in 1:length(components.s)){
-  #   print(components.s[i])
-  #   print(res.findfun[,i])}
-  # 
-  # res.findfun[,15]$package_name
-  # df.res<-as.data.frame(t(res.findfun))
-  # df.res$first.res<-sapply(df.res[,1],`[`,1)
+  #convert and reorganize findings
+  res.findfun<-sapply(character.vector,find_funs)
+  df.res<-as.data.frame(t(res.findfun))
   
   #extract the most basic package where the function name is found
   df.res$last.res<-mapply(`[`, df.res[,1], sapply(df.res[,1],length)) 

@@ -13,9 +13,25 @@
 # Load data 
 # files<-list.files()
 # files<-files[grep('.R',files, fixed = T)]
-# for(f in files){print(f);list.of.funs<-detect.functions(f);print(list.of.funs)}
+# for(f in files){
+#   print(f)
+#   list.of.funs<-detect.functions(f)
+#   if(!is.null(list.of.funs[1])){
+#     if(!is.na(list.of.funs[1])){
+#       find.functions(list.of.funs)
+#     }
+#   }
+# }
 # function.to.check<-files[1]
-# for(f in functions){print(f);list.of.funs<-detect.functions(f, type = 'function');print(list.of.funs)}
+# for(f in functions){
+#   print(f)
+#   list.of.funs<-detect.functions(f, type = 'function')
+#   if(!is.null(list.of.funs[1])){
+#     if(!is.na(list.of.funs[1])){
+#       find.functions(list.of.funs)
+#     }
+#   }
+# }
 # detect.functions(function.to.check = 'full.ranges', type = 'function')
 
 # text.split[grep('result',text.split, fixed = T)]

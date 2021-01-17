@@ -17,7 +17,7 @@
 # Reformat data
 
 # Define function
-find.functions<-function(character.vector){
+find.functions<-function(character.vector, quiet=F, return.unknown=F){
   #check input
   if(!is.character(character.vector)){
     stop('This funcion only accepts character vectors')
@@ -36,11 +36,15 @@ find.functions<-function(character.vector){
   #test which do not match any known function
   res<-df.res$last.res=='No_results_found'
   
+  if(!quiet){
   print('These input strings were found to be functions from known packages:')
   print(rownames(df.res)[!res])
   
   print("These input strings do not match any known packages' functions:")
   print(rownames(df.res)[res])
+  }
+  
+  return(rownames(df.res)[res])
 }
 # Explore and plot data
 

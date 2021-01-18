@@ -77,21 +77,26 @@ detect.functions<-function(function.to.check,
     
     #split at opening brackets
     list.of.potential.funs<-sapply(text.split.s,strsplit,'[(]') 
-    
-    #all except the last of a line are functions
-    list.of.potential.funs.s<-mapply(`[`, list.of.potential.funs, -sapply(list.of.potential.funs,length))
-    list.of.funs<-unique(unname(unlist(list.of.potential.funs.s)))
-    
-    #sometimes a function has some angular bracket, what's before it is not part of a function name
-    list.of.funs<-unique(unname(unlist(sapply(sapply(list.of.funs, strsplit, '[', fixed=T), tail, n=1))))
-    
-    # #exclude patterns that cannot be in a function name
-    # components.s<-components[grep('[,"${}:=<>/\\%+-]', components, perl = T, invert = T)] #special characters
-    # components.s<-components.s[!emptyvalues(components.s)] #empty components
-    # components.s<-components.s[!sapply(sapply(sapply(components.s,elements,1),`%in%`,0:9),all)] #integers
-    # components.s<-components.s[grep('[', components.s, fixed = T, invert = T)] #subset brackets
-    
-    return(list.of.funs)
+    if(length(list.of.potential.funs)==0){
+      print('No functions found')
+      return(NA)
+    } else {
+      
+      #all except the last of a line are functions
+      list.of.potential.funs.s<-mapply(`[`, list.of.potential.funs, -sapply(list.of.potential.funs,length))
+      list.of.funs<-unique(unname(unlist(list.of.potential.funs.s)))
+      
+      #sometimes a function has some angular bracket, what's before it is not part of a function name
+      list.of.funs<-unique(unname(unlist(sapply(sapply(list.of.funs, strsplit, '[', fixed=T), tail, n=1))))
+      
+      # #exclude patterns that cannot be in a function name
+      # components.s<-components[grep('[,"${}:=<>/\\%+-]', components, perl = T, invert = T)] #special characters
+      # components.s<-components.s[!emptyvalues(components.s)] #empty components
+      # components.s<-components.s[!sapply(sapply(sapply(components.s,elements,1),`%in%`,0:9),all)] #integers
+      # components.s<-components.s[grep('[', components.s, fixed = T, invert = T)] #subset brackets
+      
+      return(list.of.funs)
+    }
   }
 }
 

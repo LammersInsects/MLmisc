@@ -19,13 +19,13 @@
 # Reformat data
 
 # Define function
-checksum.folder<-paste(wd.base,'Common_scripts/checksums/',sep='')
+checksumfolder<-paste(wd.base,'Common_scripts/checksums/',sep='')
 write.default.xlsx<-function(dataframe,
                              file=NA,
                              filename=paste(today,'debugging','xlsx',sep='.'),
                              colwidths=c(),
                              extra.header.info=NA,
-                             checksum.folder=checksum.folder #can be NA to not write checksums
+                             checksum.folder=checksumfolder #can be NA to not write checksums
 ){
   print('This function expects a any dataframe with a limited number of columns')
   print('Header is compulsory')
@@ -110,6 +110,9 @@ write.default.xlsx<-function(dataframe,
   
   # Change column width
   widths<-colwidths
+  if(length(widths) < ncol(dataframe)){ #if not enough column widths are given
+    widths<-c(widths,rep(4,times = ncol(dataframe) - length(widths))) #add as many small columns as there are missing
+  }
   for (i in (c(1:ncol(dataframe)))){
     setColumnWidth(sheet, colIndex=i, colWidth=widths[i])
   }
@@ -119,6 +122,10 @@ write.default.xlsx<-function(dataframe,
   
   print(paste('File is saved as', file))
   
-  #Store an md5 checksum of the just-written file
-  write_lines(x = tools::md5sum(file), file = paste(checksum.folder,file.name,'.md5sum',sep=''))
+  if(!is.na(checksum.folder)){
+    print(checksum.folder)
+    #Store an md5 checksum of the just-written file
+    checksum<-tools::md5sum(file)
+    write_lines(x = checksum, file = paste(checksum.folder,file.name,'.md5sum',sep=''))
+  }
 }

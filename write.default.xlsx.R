@@ -19,11 +19,13 @@
 # Reformat data
 
 # Define function
+checksum.folder<-paste(wd.base,'Common_scripts/checksums/',sep='')
 write.default.xlsx<-function(dataframe,
                              file=NA,
                              filename=paste(today,'debugging','xlsx',sep='.'),
                              colwidths=c(),
-                             extra.header.info=NA
+                             extra.header.info=NA,
+                             checksum.folder=checksum.folder #can be NA to not write checksums
 ){
   print('This function expects a any dataframe with a limited number of columns')
   print('Header is compulsory')
@@ -116,4 +118,7 @@ write.default.xlsx<-function(dataframe,
   saveWorkbook(wb = wb, file = file)
   
   print(paste('File is saved as', file))
+  
+  #Store an md5 checksum of the just-written file
+  write_lines(x = tools::md5sum(file), file = paste(checksum.folder,file.name,'.md5sum',sep=''))
 }

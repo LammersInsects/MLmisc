@@ -29,7 +29,7 @@ males.females<-function(xxmxxf){
   }
   
   #check if the values are of format xxmxxf
-  broken<-sapply(xxmxxf[!is.na(xxmxxf)],elements,n=1)
+  broken<-sapply(xxmxxf[!emptyvalues(xxmxxf)],elements,n=1)
   check<-rbind(sapply(sapply(broken,`%in%`,c('m')),sum)==1, #check whether the occurrence of m in string is 1
                sapply(sapply(broken,`%in%`,c('f')),sum)==1) #same for f
   if(sum(colSums(check)!=2)>0){

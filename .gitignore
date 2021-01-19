@@ -1,3 +1,17 @@
+# data files for testing should be ignored until I do this properly
+*.csv
+*.backup
+
+# log files should be ignored
+*.log
+
+# the image of the package structure should be ignored for now
+*.svg
+*.png
+
+# old but not deleted scripts should be ignored
+*-old*
+
 # ignore automatically created archive files ending in .o or .a with:
 *.[oa]
 
@@ -7,11 +21,10 @@
 # ignore windows tmp files starting with ~$
 ~$*
 
-# ignore all .pdf files in the doc/ directory and any of its subdirectories
-doc/**/*.pdf
+# ignore all .pdf files 
+*.pdf
 
-
-#ignore R files:
+### Exclude R files
 
 # History files
 .Rhistory
@@ -58,4 +71,3 @@ docs/
 
 # translation temp files
 po/*~
-

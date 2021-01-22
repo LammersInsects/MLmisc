@@ -23,7 +23,11 @@ duplicates<-function(dataframe, columns=c(2:4)){
   #TODO Here the script should check that there is enough columns to perform the paste with
   #if not, check for duplicates on a single vector?
   cln<-columns
-  txt<-do.call(paste,dataframe[,cln])
+  if(length(columns)>1){
+    txt<-do.call(paste,dataframe[,cln])
+  } else {
+    txt<-dataframe[,cln]
+  }
   cnt<-as.data.frame(table(txt))
   dupl<-cnt[cnt$Freq!=1,]
   test<-txt %in% dupl$txt

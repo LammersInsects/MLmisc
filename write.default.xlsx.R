@@ -126,6 +126,6 @@ write.default.xlsx<-function(dataframe,
     print(checksum.folder)
     #Store an md5 checksum of the just-written file
     checksum<-tools::md5sum(file)
-    write_lines(x = checksum, file = paste(checksum.folder,file.name,'.md5sum',sep=''))
+    writeLines(text = checksum, con = paste(checksum.folder,file.name,'.md5sum',sep=''))
   }
 }

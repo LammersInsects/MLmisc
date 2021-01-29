@@ -1,12 +1,6 @@
 # Written by Mark Lammers; Animal Ecology, Vrije Universiteit Amsterdam; mark.lammers@vu.nl
 # (c) 2018. Released under the terms of the GNU General Public License v3.
 
-# source('C:/Users/mls241/surfdrive/Common_scripts/R_startup_script.R') #VU
-# source("C:/DATA/SURFdrive/Common_scripts/R_startup_script.R") #Thuis
-# source("E:/SURFdrive/Common_scripts/R_startup_script.R") #Yoga
-
-# debugging<-F
-
 # This function takes a vector and returns a same-sized vector with logical values indicating which values are empty
 
 decode.workhorse<-function(x,
@@ -192,46 +186,3 @@ decode<-function(x,
   }
   return(output)
 }
-
-# if(debugging){
-#   
-#   ingredienten.new<-read.table('C:/DATA/SURFdrive/Projects_home/Stokerij/database/ingredienten.registry.csv',header=T,sep=';')[,2:6]
-#   pot.new<-read.table('C:/DATA/SURFdrive/Projects_home/Planten/database_v2/pot.registry.csv',header=T,sep=';')[,2:6]
-#   testset<-c(ingredienten.new$Waarde,pot.new[pot.new$Plant=='Formaat','Waarde'])
-#   #   testset<-testset[lapply(testset,nchar)<13]
-#   
-#   full<-testset[1679]
-#   decode(full,target='pattern')
-#   
-#   df<-data.frame(start=testset)
-#   df$datatype<-decode.multiple(testset,target='datatype')
-#   df$transl<-decode.multiple(testset,target='translation')
-#   df$breaks<-decode.multiple(testset,target='breaks')
-#   df$pattern<-decode.multiple(testset,target='pattern')
-#   df$patt.noS<-decode.multiple(testset,target='pattern.no.spaces')
-#   df$splitted<-decode.multiple(testset,target='splitted')
-#   df$number<-decode.multiple(testset,target='number')
-#   df$unit<-decode.multiple(testset,target='unit')
-#   
-#   df.s<-df[!df$datatype %in% c('character','integer'),]
-#   df.s[order(df.s$datatype),]
-#   full<-testset[1418]
-#   
-#   df[grep('0.0',df$start,fixed=T),]
-#   tail(df[order(nchar(df$pattern)),])
-#   
-#   for(c in c('datatype','transl','breaks','patt.noS','unit')){
-#     print(c); 
-#     t<-as.data.frame(table(df.s[,c])); 
-#     print(t)
-#   }
-#   for(i in t$Var1){
-#     print(i); 
-#     print(head(df.s[df.s[,c]==i,])) #problems with NAs
-#   }
-#   
-#   not.recognised.old<-read.table(paste(wd.base,'Common_scripts/database_package/patterns.not.recognised.log',sep=''),header=T,sep=';',quote='"')
-#   
-#   
-# }
-# 

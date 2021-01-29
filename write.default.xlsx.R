@@ -123,7 +123,7 @@ write.default.xlsx<-function(dataframe,
   print(paste('File is saved as', file))
   
   if(!is.na(checksum.folder)){
-    print(checksum.folder)
+    print(paste("And the file's md5sum is saved in",checksum.folder))
     #Store an md5 checksum of the just-written file
     checksum<-tools::md5sum(file)
     writeLines(text = checksum, con = paste(checksum.folder,file.name,'.md5sum',sep=''))

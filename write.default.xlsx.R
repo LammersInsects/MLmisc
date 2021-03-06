@@ -12,7 +12,7 @@
 # Define function
 checksumfolder<-paste(wd.base,'Common_scripts/checksums/',sep='')
 write.default.xlsx<-function(dataframe,
-                             file=NA,
+                             filepath=NA,
                              filename=paste(today,'debugging','xlsx',sep='.'),
                              colwidths=c(),
                              extra.header.info=NA,
@@ -23,8 +23,8 @@ write.default.xlsx<-function(dataframe,
   
   # Check input
   #file name
-  if(is.na(file)){
-    file<-filename
+  if(is.na(filepath)){
+    filepath<-filename
     file.name<-rev(unlist(strsplit(filename, split = '/', fixed = T)))[1]
   } else {
     file.name<-filename
@@ -109,14 +109,14 @@ write.default.xlsx<-function(dataframe,
   }
   
   # Save the workbook to a file
-  saveWorkbook(wb = wb, file = file)
+  saveWorkbook(wb = wb, file = filepath)
   
-  print(paste('File is saved as', file))
+  print(paste('File is saved as', filepath))
   
   if(!is.na(checksum.folder)){
     print(paste("And the file's md5sum is saved in",checksum.folder))
     #Store an md5 checksum of the just-written file
-    checksum<-tools::md5sum(file)
+    checksum<-tools::md5sum(filepath)
     writeLines(text = checksum, con = paste(checksum.folder,file.name,'.md5sum',sep=''))
   }
 }

@@ -464,11 +464,11 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     if(Timevar!=F){ #i.e. there is a Time variable
       if(nr.groups>1){ #i.e. there is groups structure
         if(Tibia.col!=F){ #i.e. there is Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$groupstructure*df$FeedingTreatment*df$Timevar+df$Tibia)
-          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$groupstructure*df$FeedingTreatment*df$Timevar+df$Tibia)
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Tibia+df$groupstructure*df$FeedingTreatment*df$Timevar)
+          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$Tibia+df$groupstructure*df$FeedingTreatment*df$Timevar)
           print('Using Tibia as covariate')
         } else { #i.e. there is no Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$groupstructure*df$FeedingTreatment*df$Timevar+df$Fat.free_dw) #Use FFDW as covariate
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Fat.free_dw+df$groupstructure*df$FeedingTreatment*df$Timevar) #Use FFDW as covariate
           print('Using FFDW as a covariate for lipid levels')
           ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$groupstructure*df$FeedingTreatment*df$Timevar) #Collapses to an ANOVA
           print('Remember: without Tibia data the ANCOVA for FFDW does not have a covariate (=ANOVA)!')
@@ -476,11 +476,11 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
         
       } else { #i.e. there is no groups structure
         if(Tibia.col!=F){ #i.e. there is Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$FeedingTreatment*df$Timevar+df$Tibia)
-          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$FeedingTreatment*df$Timevar+df$Tibia)
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Tibia+df$FeedingTreatment*df$Timevar)
+          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~+df$Tibia+df$FeedingTreatment*df$Timevar)
           print('Using Tibia as covariate')
         } else { #i.e. there is no Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$FeedingTreatment*df$Timevar+df$Fat.free_dw)
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Fat.free_dw+df$FeedingTreatment*df$Timevar)
           print('Using FFDW as a covariate for lipid level because no Tibia data is found. Validity should be checked!')
           ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$FeedingTreatment*df$Timevar) #Collapses to an ANOVA
           print('Remember: without Tibia data the ANCOVA for FFDW does not have a covariate (=ANOVA)!')
@@ -489,11 +489,11 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     } else { #i.e. there is no Time variable
       if(nr.groups>1){ #i.e. there is groups structure
         if(Tibia.col!=F){ #i.e. there is Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$groupstructure*df$Treatment+df$Tibia)
-          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$groupstructure*df$Treatment+df$Tibia)
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Tibia+df$groupstructure*df$Treatment)
+          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$Tibia+df$groupstructure*df$Treatment)
           print('Using Tibia as covariate')
         } else { #i.e. there is no Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$groupstructure*df$Treatment+df$Fat.free_dw) #Use FFDW as covariate
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Fat.free_dw+df$groupstructure*df$Treatment) #Use FFDW as covariate
           print('Using FFDW as a covariate for lipid levels')
           ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$groupstructure*df$Treatment) #Collapses to an ANOVA
           print('Remember: without Tibia data the ANCOVA for FFDW does not have a covariate (=ANOVA)!')
@@ -501,11 +501,13 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
         
       } else { #i.e. there is no groups structure
         if(Tibia.col!=F){ #i.e. there is Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$Treatment+df$Tibia)
-          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$Treatment+df$Tibia)
+          #The covariate goes first (and there is no interaction)! If you do not do this in order, you will get different results.
+          #See https://www.datanovia.com/en/lessons/ancova-in-r/
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Tibia+df$Treatment)
+          ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~+df$Tibia+df$Treatment)
           print('Using Tibia as covariate')
         } else { #i.e. there is no Tibia data
-          ancova.lipids<-aov(data=df, formula=Lipids~df$Treatment+df$Fat.free_dw)
+          ancova.lipids<-aov(data=df, formula=df$Lipids~df$Fat.free_dw+df$Treatment)
           print('Using FFDW as a covariate for lipid level because no Tibia data is found. Validity should be checked!')
           ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~df$Treatment) #Collapses to an ANOVA
           print('Remember: without Tibia data the ANCOVA for FFDW does not have a covariate (=ANOVA)!')
@@ -516,6 +518,8 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     print(summary(ancova.lipids))
     print('ANCOVA for FFDW:')
     print(summary(ancova.ffdw))
+    #See also https://towardsdatascience.com/anovas-three-types-of-estimating-sums-of-squares-don-t-make-the-wrong-choice-91107c77a27a
+    #for type 1, 2 and 3 sum of squares. Here we use type 1 because we first want to correct for tibia-effects
     
     #Check residuals of the ANCOVAs
     par(mfrow=c(2,2))

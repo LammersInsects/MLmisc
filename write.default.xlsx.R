@@ -18,7 +18,7 @@ write.default.xlsx<-function(dataframe,
                              extra.header.info=NA,
                              checksum.folder=checksumfolder #can be NA to not write checksums
 ){
-  print('This function expects a any dataframe with a limited number of columns')
+  print('This function expects any dataframe with a limited number of columns')
   print('Header is compulsory')
   
   # Check input

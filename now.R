@@ -10,12 +10,12 @@
 # Reformat data
 
 # Define function
-now<-function(precision='seconds'){
+now<-function(precision='seconds'){ #default precision
   #if precision is desired, change R glocal options
-  if(precision=='milliseconds'){
+  if(precision=='milliseconds' | precision=='millisec' | precision=='ms'){
     options(digits.secs=3)
   }
-  if(precision=='microseconds'){
+  if(precision=='microseconds' | precision=='microsec' | precision=='us'){
     options(digits.secs=6)
   }
   

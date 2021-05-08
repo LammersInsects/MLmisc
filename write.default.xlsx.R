@@ -16,10 +16,13 @@ write.default.xlsx<-function(dataframe,
                              filename=paste(today,'debugging','xlsx',sep='.'),
                              colwidths=c(),
                              extra.header.info=NA,
-                             checksum.folder=checksumfolder #can be NA to not write checksums
+                             checksum.folder=checksumfolder, #can be NA to not write checksums
+                             quiet=F
 ){
-  print('This function expects any dataframe with a limited number of columns')
-  print('Header is compulsory')
+  if(!quiet){
+    print('This function expects any dataframe with a limited number of columns')
+    print('Header is compulsory')
+  }
   
   # Check input
   #file name
@@ -111,10 +114,14 @@ write.default.xlsx<-function(dataframe,
   # Save the workbook to a file
   saveWorkbook(wb = wb, file = filepath)
   
-  print(paste('File is saved as', filepath))
+  if(!quiet){
+    print(paste('File is saved as', filepath))
+  }
   
   if(!is.na(checksum.folder)){
-    print(paste("And the file's md5sum is saved in",checksum.folder))
+    if(!quiet){
+      print(paste("And the file's md5sum is saved in",checksum.folder))
+    }
     #Store an md5 checksum of the just-written file
     checksum<-tools::md5sum(filepath)
     writeLines(text = checksum, con = paste(checksum.folder,file.name,'.md5sum',sep=''))

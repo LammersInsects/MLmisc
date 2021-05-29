@@ -28,10 +28,10 @@ time.passed<-function(start, end, return.it=F){ #start and end should be timesta
   tp<-difftime(strptime(x = end, format = '%Y%m%d%H%M%S'), strptime(x = start, format = '%Y%m%d%H%M%S'))
   
   if(start.n<20){ #microsecond precision has 20 characters
-    start<-paste(start,paste(rep(0,20-start.n),collapse=''),sep='') #add as many zeros as required
+    start<-paste(as.numeric(start),paste(rep(0,20-start.n),collapse=''),sep='') #add as many zeros as required
   }
   if(end.n<20){ #microsecond precision has 20 characters
-    end<-paste(end,paste(rep(0,20-end.n),collapse=''),sep='') #add as many zeros as required
+    end<-paste(as.numeric(end),paste(rep(0,20-end.n),collapse=''),sep='') #add as many zeros as required
   }
   
   if((as.numeric(end)-as.numeric(start))<60000000){ #when something takes less than a minute,

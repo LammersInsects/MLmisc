@@ -29,6 +29,7 @@ time.passed<-function(start, end, return.it=F){ #start and end should be timesta
   
   if(start.n<20){ #microsecond precision has 20 characters
     start<-paste(as.numeric(start),paste(rep(0,20-start.n),collapse=''),sep='') #add as many zeros as required
+    #the as.numeric doesn't help to remove the unwanted precision. Instead the precision should be removed in now()
   }
   if(end.n<20){ #microsecond precision has 20 characters
     end<-paste(as.numeric(end),paste(rep(0,20-end.n),collapse=''),sep='') #add as many zeros as required

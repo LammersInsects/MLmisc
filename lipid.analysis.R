@@ -13,19 +13,19 @@
 # - [important, to be tested ASAP] With 3 treatments the boxplots and plots use different colors! (see L. clavipes plots)
 # - Does not accomodate more than one factor as a treatment: What if time*treatment structure? And what if there is more than 2 treatments? Not all works
 
-lipid.analysis<-function(dataframe,     # Line 1: Essentials
+lipid.analysis<-function(dataframe, # Line 1: Essentials
                          filename='results',
-                         subexperiment.col=F,   # Line 2: Define columns - required when different from default
-                         Treatment.col='Treatment', 
+                         subexperiment.col=F, # Line 2: Define columns - required when different from default
+                         Treatment.col='Treatment',
                          Timevar=F,  #is assumed to be measured in days
-                         Dryweight.col='Dry_weight', 
-                         FFDW.col='Fat.free_dw', 
+                         Dryweight.col='Dry_weight',
+                         FFDW.col='Fat.free_dw',
                          Tibia.col=F,
-                         plot.results=T,   # Line 3: Tell the function which parts to run
+                         plot.results=T, # Line 3: Tell the function which parts to run
                          save.plots.as.pdfs=F,
                          do.stats=T,
-                         random.effect.col=F,  #models taking this into account are unfinished
-                         control.treatment='.Control',   # Line 4: Optional - additional analysis of deviation from controls
+                         random.effect.col=F, #models taking this into account are unfinished
+                         control.treatment='.Control', # Line 4: Optional - additional analysis of deviation from controls
                          analysis.of.residuals=F,
                          return.df=F
 ){
@@ -45,19 +45,19 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     random.effect.col=F  #models taking this into account are unfinished
     control.treatment='.control'   # Line 4: Optional - additional analysis of deviation from controls
     analysis.of.residuals=F
-    return.df=F    
+    return.df=F
   }
   
   #Load packages
   print('Note: The pipeline will install all dependencies on the first run. This might take a while.')
   options(warn = -1)
-  if (!require(car)) {install.packages('car')} 
+  if (!require(car)) {install.packages('car')}
   library(car)
-  if (!require(ggplot2)) {install.packages('ggplot2')} 
+  if (!require(ggplot2)) {install.packages('ggplot2')}
   library(ggplot2)
-  if (!require(RColorBrewer)) {install.packages('RColorBrewer')} 
+  if (!require(RColorBrewer)) {install.packages('RColorBrewer')}
   library(RColorBrewer)
-  if (!require(nlme)) {install.packages('nlme')} 
+  if (!require(nlme)) {install.packages('nlme')}
   library(nlme)
   if(!require(multcomp)){install.packages('multcomp')}
   library('multcomp')
@@ -94,15 +94,16 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     } else {
       print('WARNING: non-numeric Tibia column!'); stop()
     }
-  }  
+  }
   if(random.effect.col!=F){
     print(paste('Random effect column called',random.effect.col,'is specified'))
     print('So far only included in the Dunnett posthoc test for deviation of expected lipid levels!')
     df$Random<-df[,random.effect.col]
   }
-  df$Lipids<-df[,Dryweight.col]-df[,FFDW.col]  
+  df$Lipids<-df[,Dryweight.col]-df[,FFDW.col]
   
   #Check for empty columns and remove these
+  #TODO here could use remove.empty.columns()
   df.withemptycol<-ncol(df)
   df<-df[!sapply(df, function(x) all(x == "" || is.na(x)))]
   df.ncol<-ncol(df)
@@ -146,7 +147,7 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     print('All lipid levels are between 5 and 30%')
   }
   
-  ##Check for presence of experiment substructure (e.g. RNAi_Target, Strain, Block, ...) 
+  ##Check for presence of experiment substructure (e.g. RNAi_Target, Strain, Block, ...)
   if(subexperiment.col==F){
     #         subexperiment.col<-'groupdummyvar'
     #     df[,subexperiment.col]<-'groupdummyvar'
@@ -214,10 +215,10 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     
     if(save.plots.as.pdfs){ dev.off() }
     
-    #Tibia length data    
-    if(Tibia.col==F){ 
+    #Tibia length data
+    if(Tibia.col==F){
       print('No tibia length data found')
-    } else { 
+    } else {
       if(save.plots.as.pdfs){
         pdf(paste(today,'_',filename,'_Hist.tibia.pdf',sep=''),width=11.69,height=8.27) # A4 landscape
       }
@@ -225,11 +226,11 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
       #     colorset<-brewer.pal(nr.treatments+1,'Set1')
       #     colorset<-paste(colorset,'80',sep='')
       #     print('Plotting histogram of tibia lengths')
-      #     hist(subset(df[,Tibia.col],df$Treatment==treatments[1]), 
-      #          breaks=pretty(min(df$Tibia, na.rm=T):max(df$Tibia, na.rm=T),n=10), col=colorset[1], 
+      #     hist(subset(df[,Tibia.col],df$Treatment==treatments[1]),
+      #          breaks=pretty(min(df$Tibia, na.rm=T):max(df$Tibia, na.rm=T),n=10), col=colorset[1],
       #          main='Histogram of Tibia Lengths', xlab='Tibia length [um]')
       #     for (i in 2:length(treatments)){
-      #       hist(subset(df[,Tibia.col],df$Treatment==treatments[i]), 
+      #       hist(subset(df[,Tibia.col],df$Treatment==treatments[i]),
       #            breaks=pretty(min(df$Tibia, na.rm=T):max(df$Tibia, na.rm=T),n=10),col=colorset[i], add=T)
       #     }
       #     mtext(paste(today,filename),3,3)
@@ -263,34 +264,34 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
       ffdw.minmax<-c(min(df$Fat.free_dw,na.rm=T),max(df$Fat.free_dw,na.rm=T))
       lipids.minmax<-c(min(df$Lipids,na.rm=T),max(df$Lipids,na.rm=T))
       
-      # if(samplesize[i,treatments[1]]>1 & samplesize[i,treatments[2]]>1){ 
+      # if(samplesize[i,treatments[1]]>1 & samplesize[i,treatments[2]]>1){
       #This ONLY works well with 2 treatments! What if more than 2 treatments? Why is this necessary? For now disabled.
       
       df.s<-subset(df,df$groupstructure==i)
       
       #Boxplot of lipids per treatment
-      boxplot(data=df.s, Lipids~Treatment, 
+      boxplot(data=df.s, Lipids~Treatment,
               main=title, xlab="Treatment", ylab="Lipids [ug]",
-              ylim=c(0,lipids.minmax[2]), 
+              ylim=c(0,lipids.minmax[2]),
               col=c('grey30',treatments.key$color[2:nrow(treatments.key)]))
       
       #Scatterplot of lipids by FFDW
       plot(data=df.s, Lipids~Fat.free_dw, col=df.s$color.Treatment, pch=df.s$color.Treatment,
-           xlim=ffdw.minmax, ylim=c(0,lipids.minmax[2]), 
+           xlim=ffdw.minmax, ylim=c(0,lipids.minmax[2]),
            main=title, xlab="Fat free dry weight [ug]", ylab="Lipids [ug]")
       legend("topleft",legend=treatments.key$Treatment,col=treatments.key$color,pch=treatments.key$color)
       for (j in unique(df.s$Treatment)){
         df.s.t<-subset(df.s,df.s$Treatment==j)
-        m<-lm(data=df.s.t, Lipids~Fat.free_dw)      
+        m<-lm(data=df.s.t, Lipids~Fat.free_dw)
         #         print(summary(m))
         abline(m, col=df.s.t$color.Treatment[1])
-      }  
+      }
       
       if(Tibia.col!=F){ #i.e. there is Tibia data
         
         #Scatterplot of lipids by tibia
         plot(data=df.s, Lipids~Tibia, col=df.s$color.Treatment, pch=df.s$color.Treatment,
-             xlim=tibia.minmax, ylim=lipids.minmax, 
+             xlim=tibia.minmax, ylim=lipids.minmax,
              main=title, xlab="Tibia [um]", ylab="Lipids [ug]")
         legend("topleft",legend=treatments.key$Treatment,col=treatments.key$color,pch=treatments.key$color)
         for (j in unique(df.s$Treatment)){
@@ -302,7 +303,7 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
         
         #Scatterplot of FFDW by Tibia
         plot(data=df.s, Fat.free_dw~Tibia,col=df.s$color.Treatment, pch=df.s$color.Treatment,
-             xlim=tibia.minmax, ylim=ffdw.minmax, 
+             xlim=tibia.minmax, ylim=ffdw.minmax,
              main=title, xlab="Tibia [um]", ylab="Fat free dry weight [ug]")
         legend("topleft",legend=treatments.key$Treatment,col=treatments.key$color,pch=treatments.key$color)
         for (j in unique(df.s$Treatment)){
@@ -317,16 +318,16 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
       mtext(paste(today,filename),3,3)
       
       # Boxplots for both lipids and FFDW side by side
-      old.par <- par(mfrow=c(1,2)) 
+      old.par <- par(mfrow=c(1,2))
       #Boxplot of lipids per treatment
-      boxplot(data=df.s, Lipids~Treatment, 
+      boxplot(data=df.s, Lipids~Treatment,
               main=title, xlab="Treatment", ylab="Lipids [ug]",
-              ylim=lipids.minmax, 
+              ylim=lipids.minmax,
               col=c('grey30',treatments.key$color[2:nrow(treatments.key)]))
       #Boxplot of FFDW per treatment
-      boxplot(data=df.s, Fat.free_dw~Treatment, 
+      boxplot(data=df.s, Fat.free_dw~Treatment,
               main=title, xlab="Treatment", ylab="Fat-free dry-weight [ug]",
-              ylim=ffdw.minmax, 
+              ylim=ffdw.minmax,
               col=c('grey30',treatments.key$color[2:nrow(treatments.key)]))
       par(mfrow=c(1,1))
       mtext(paste(today,filename),3,3)
@@ -344,17 +345,17 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     #Plots for time-sampled data
     if(Timevar!=F){
       if(save.plots.as.pdfs){
-        pdf(paste(today,'_',filename,'_Time.plots.pdf',sep=''),width=6,height=6) 
+        pdf(paste(today,'_',filename,'_Time.plots.pdf',sep=''),width=6,height=6)
       }
       #http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/
       pd <- position_dodge(0.1) # move them .05 to the left and right
       # Black error bars - notice the mapping of 'group=supp' -- without it, the error bars won't be dodged!
-      #     ggplot(LIPIDS.time, aes(x=Timevar, y=Lipids, colour=FeedingTreatment, group=FeedingTreatment)) + 
+      #     ggplot(LIPIDS.time, aes(x=Timevar, y=Lipids, colour=FeedingTreatment, group=FeedingTreatment)) +
       #       geom_errorbar(aes(ymin=Lipids-se, ymax=Lipids+se), colour="black", width=.1, position=pd) +
       #       geom_line(position=pd) +
       #       geom_point(position=pd, size=3)
       
-      time.plot.lipids<-ggplot(LIPIDS.time, aes(x=Timevar, y=Lipids, colour=FeedingTreatment, group=FeedingTreatment)) + 
+      time.plot.lipids<-ggplot(LIPIDS.time, aes(x=Timevar, y=Lipids, colour=FeedingTreatment, group=FeedingTreatment)) +
         geom_errorbar(aes(ymin=Lipids-se, ymax=Lipids+se), colour="black", width=.1, position=pd) +
         geom_line(position=pd) +
         geom_point(position=pd, size=4, shape=21, fill="white") + # 21 is filled circle
@@ -365,14 +366,14 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
                          l=40) +                    # Use darker colors, lightness=40
         ggtitle(paste(today,filename)) +
         expand_limits(y=0, x=c(0,10)) +                        # Expand y range
-        scale_y_continuous(breaks=pretty(lipids.minmax,n=10)) +     
-        scale_x_continuous(breaks=pretty(c(min(df$Day),max(df$Day)+1),n=10)) +  
+        scale_y_continuous(breaks=pretty(lipids.minmax,n=10)) +
+        scale_x_continuous(breaks=pretty(c(min(df$Day),max(df$Day)+1),n=10)) +
         theme_bw() +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_blank()) +
         theme(legend.justification=c(1,0),
               legend.position=c(1,0))               # Position legend in bottom right
       
-      time.plot.ffdw<-ggplot(FFDW.time, aes(x=Timevar, y=Fat.free_dw, colour=FeedingTreatment, group=FeedingTreatment)) + 
+      time.plot.ffdw<-ggplot(FFDW.time, aes(x=Timevar, y=Fat.free_dw, colour=FeedingTreatment, group=FeedingTreatment)) +
         geom_errorbar(aes(ymin=Fat.free_dw-se, ymax=Fat.free_dw+se), colour="black", width=.1, position=pd) +
         geom_line(position=pd) +
         geom_point(position=pd, size=4, shape=21, fill="white") + # 21 is filled circle
@@ -383,8 +384,8 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
                          l=40) +                    # Use darker colors, lightness=40
         ggtitle(paste(today,filename)) +
         expand_limits(y=0, x=c(0,10)) +                        # Expand x&y range
-        scale_y_continuous(breaks=pretty(ffdw.minmax,n=10)) +     
-        scale_x_continuous(breaks=pretty(c(min(df$Day),max(df$Day)+1),n=10)) +   
+        scale_y_continuous(breaks=pretty(ffdw.minmax,n=10)) +
+        scale_x_continuous(breaks=pretty(c(min(df$Day),max(df$Day)+1),n=10)) +
         theme_bw() +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_blank()) +
         theme(legend.justification=c(1,0),
@@ -424,7 +425,7 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     #     lambda<-bc$x[which.max(bc$y)]
     #     print(paste('Lambda of Box-Cox transformation is estimated as',lambda))
     #     par(mfrow=c(2,2))
-    #     hist(df.s$Lipids,breaks=20, main='Untransformed') 
+    #     hist(df.s$Lipids,breaks=20, main='Untransformed')
     #     #   hist(log(df$Lipids,base=exp(1)),breaks=20)
     #     hist((df.s$Lipids^lambda-1)/lambda,breaks=20, main='Box-Cox transformed')
     #     qqnorm(df.s$Lipids)
@@ -436,7 +437,7 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     #   lambda<-bc$x[which.max(bc$y)]
     #   print(paste('Lambda of Box-Cox transformation is estimated as',lambda))
     #   par(mfrow=c(2,2))
-    #   hist(df$Lipids,breaks=20, main='Untransformed') 
+    #   hist(df$Lipids,breaks=20, main='Untransformed')
     #   #   hist(log(df$Lipids,base=exp(1)),breaks=20)
     #   # hist(1/df$Lipids,breaks=20)
     #   hist((df$Lipids^lambda-1)/lambda,breaks=20, main='Box-Cox transformed')
@@ -448,7 +449,7 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     #   lambda<-bc$x[which.max(bc$y)]
     #   print(paste('Lambda of Box-Cox transformation is estimated as',lambda))
     #   par(mfrow=c(2,2))
-    #   hist(df$Tibia,breaks=20, main='Untransformed') 
+    #   hist(df$Tibia,breaks=20, main='Untransformed')
     #   # hist(log(df$Tibia,base=exp(1)),breaks=20)
     #   # hist(1/df$Lipids,breaks=20)
     #   hist((df$Tibia^lambda-1)/lambda,breaks=20, main='Box-Cox transformed')
@@ -460,7 +461,7 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
     levene.lipids<-leveneTest(y=df$Lipids, group=as.factor(df$Treatment))
     print(levene.lipids)
     
-    #ANCOVAs for lipids and FFDW  
+    #ANCOVAs for lipids and FFDW
     if(Timevar!=F){ #i.e. there is a Time variable
       if(nr.groups>1){ #i.e. there is groups structure
         if(Tibia.col!=F){ #i.e. there is Tibia data
@@ -638,40 +639,40 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
             Dunnett <- glht(m, linfct=mcp(groupstructure="Dunnett"))
             print('Dunnett posthoc for deviation of expected Lipids as predicted by Tibia')
             print(summary(Dunnett))
-#             
-#             if(random.effect.col!=F){
-#               print('Mixed-effects model with Dunnett posthoc')
-#               m2 <- lme(data=df.s, (Lipids-expected)~groupstructure, random =~1|Random, na.action = na.omit, method= "ML")
-#               print(summary(m2))
-#               print(anova(m2))
-#               qqnorm(resid(m2))
-#               Dunnett.random <- glht(m2, mcp(groupstructure="Dunnett")) ## Or Dunnett when the two control treatments are combined?
-#               print(summary(Dunnett.random))
-#               
-#               print('Model with random effect as factor with Dunnett posthoc')
-#               df.s$interactionoffactors<-interaction(df.s$groupstructure,df.s$Random)
-#               m3<-lm(data=df.s,(Lipids-expected)~interactionoffactors)
-#               print(summary(m3))
-#               print(anova(m3))
-#               qqnorm(resid(m3))
-#               Dunnett.random <- glht(m3, mcp(interactionoffactors="Dunnett")) ## Or Dunnett when the two control treatments are combined?
-#               print(summary(Dunnett.random))
-#               
-#             }
+            #             
+            #             if(random.effect.col!=F){
+            #               print('Mixed-effects model with Dunnett posthoc')
+            #               m2 <- lme(data=df.s, (Lipids-expected)~groupstructure, random =~1|Random, na.action = na.omit, method= "ML")
+            #               print(summary(m2))
+            #               print(anova(m2))
+            #               qqnorm(resid(m2))
+            #               Dunnett.random <- glht(m2, mcp(groupstructure="Dunnett")) ## Or Dunnett when the two control treatments are combined?
+            #               print(summary(Dunnett.random))
+            #               
+            #               print('Model with random effect as factor with Dunnett posthoc')
+            #               df.s$interactionoffactors<-interaction(df.s$groupstructure,df.s$Random)
+            #               m3<-lm(data=df.s,(Lipids-expected)~interactionoffactors)
+            #               print(summary(m3))
+            #               print(anova(m3))
+            #               qqnorm(resid(m3))
+            #               Dunnett.random <- glht(m3, mcp(interactionoffactors="Dunnett")) ## Or Dunnett when the two control treatments are combined?
+            #               print(summary(Dunnett.random))
+            #               
+            #             }
           }
           #Fat free dry weight
-#           for (i in unique(df$Treatment)){ #do for all treatments
-#             df.s<-subset(df,df$Treatment==i)
-#             df.m<-subset(df.s,df.s$groupstructure=='.Control')
-#             m.ffdw<-lm(data=df.m, Fat.free_dw~Tibia)
-#             df.m.summ<-summarySE(df.m,measurevar = 'Fat.free_dw', groupvars = 'Treatment')
-#             print(paste('Mean FFDW of controls for treatment <',i,'> is',df.m.summ$Fat.free_dw,'with SE',df.m.summ$se))
-#             df.s$expected<-predict.lm(m.ffdw,df.s)
-#             boxplot((df.s$Fat.free_dw-df.s$expected)~df.s$groupstructure,col=groups.key$col,
-#                     main=paste('Deviation from expectation at\n',i,'for Fat-free dry-weight'))
-#             m<-lm(data=df.s,(Lipids-expected)~groupstructure)
-#             print(summary(m))
-#           }
+          #           for (i in unique(df$Treatment)){ #do for all treatments
+          #             df.s<-subset(df,df$Treatment==i)
+          #             df.m<-subset(df.s,df.s$groupstructure=='.Control')
+          #             m.ffdw<-lm(data=df.m, Fat.free_dw~Tibia)
+          #             df.m.summ<-summarySE(df.m,measurevar = 'Fat.free_dw', groupvars = 'Treatment')
+          #             print(paste('Mean FFDW of controls for treatment <',i,'> is',df.m.summ$Fat.free_dw,'with SE',df.m.summ$se))
+          #             df.s$expected<-predict.lm(m.ffdw,df.s)
+          #             boxplot((df.s$Fat.free_dw-df.s$expected)~df.s$groupstructure,col=groups.key$col,
+          #                     main=paste('Deviation from expectation at\n',i,'for Fat-free dry-weight'))
+          #             m<-lm(data=df.s,(Lipids-expected)~groupstructure)
+          #             print(summary(m))
+          #           }
           par(old.par)
           
           if(save.plots.as.pdfs){ dev.off() }
@@ -679,6 +680,10 @@ lipid.analysis<-function(dataframe,     # Line 1: Essentials
         }        
       }
     }
+    
+    #Here analyse the lipid levels in percentages, a method for dealing with high heteroscedasticity
+    #TODO
+    
   }
   if(return.df){
     print('After running the full script the resulting data frame looks like this. Best to be stored in a df using "output<-"')

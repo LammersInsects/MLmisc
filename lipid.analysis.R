@@ -187,6 +187,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
   ##################################
   
   LIPIDS<-summarySE(df,measurevar = 'Lipids', groupvars = c('groupstructure','Treatment'))
+  PERCLIPIDS<-summarySE(df,measurevar = 'perc.lipid', groupvars = c('groupstructure','Treatment'))
   FFDW<-summarySE(df,measurevar = 'Fat.free_dw', groupvars = c('groupstructure','Treatment'))
   print('Summary of complete data set:')
   print(LIPIDS)
@@ -332,6 +333,14 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
       par(mfrow=c(1,1))
       mtext(paste(today,filename),3,3)
       
+      #Boxplot of perc lipids per treatment
+      old.par <- par(mfrow=c(1,2))
+      boxplot(data=df.s, perc.lipid~Treatment,
+              main=title, xlab="Treatment", ylab="Lipids [ w/w % ]",
+              ylim=c(0,max(df$perc.lipid)),
+              col=c('grey30',treatments.key$color[2:nrow(treatments.key)]))
+      par(mfrow=c(1,1))
+      mtext(paste(today,filename),3,3)
     }
     
     options(warn = 0)
@@ -682,9 +691,27 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
     }
     
     #Here analyse the lipid levels in percentages, a method for dealing with high heteroscedasticity
-    #TODO
+    print('In case the data is unacceptibly heteroscedastic, use the following analysis of lipid percentages')
+    if(length(groups)==1){
+      if(length(treatments)==2){
+        w1<-wilcox.test(df$perc.lipid~df$Treatment)
+        print('Mann-Whitney U test for lipid percentage over treatment:')
+        print(w1)
+      } else {
+        w1<-kruskal.test(df$perc.lipid~df$Treatment)
+        print('Kruskal-Wallis test for lipid percentage over treatment:')
+        print(w1)
+      }
+      if(w1$p.value<0.05){
+        print(PERCLIPIDS)
+      }
+    } else {
+      print('ERROR: the analysis of lipid percentages with additional group structure has not been added to the pipeline yet!')
+      #TODO, see https://www.statmethods.net/stats/nonparametric.html
+    }
     
   }
+  
   if(return.df){
     print('After running the full script the resulting data frame looks like this. Best to be stored in a df using "output<-"')
     return(df)

@@ -415,9 +415,15 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
     if(Tibia.col!=F){ #i.e. there is Tibia data
       if(Timevar!=F){ #i.e. there is a Time variable
         m<-lm(data=df, formula=Tibia~df$FeedingTreatment*df$groupstructure*df$Timevar)
+        #TODO possible issue with assigning variation, different types of Sum of Squares (R uses type I)
+        #See https://towardsdatascience.com/anovas-three-types-of-estimating-sums-of-squares-don-t-make-the-wrong-choice-91107c77a27a
+        #and https://www.datanovia.com/en/lessons/ancova-in-r/
       } else {
         if(nr.groups>1){
           m<-lm(data=df, formula=Tibia~df$FeedingTreatment*df$groupstructure)
+          #TODO possible issue with assigning variation, different types of Sum of Squares (R uses type I)
+          #See https://towardsdatascience.com/anovas-three-types-of-estimating-sums-of-squares-don-t-make-the-wrong-choice-91107c77a27a
+          #and https://www.datanovia.com/en/lessons/ancova-in-r/
         } else {
           m<-lm(data=df, formula=Tibia~df$FeedingTreatment)
         }

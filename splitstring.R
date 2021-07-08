@@ -1,6 +1,10 @@
 # Written by Mark Lammers; Animal Ecology, Vrije Universiteit Amsterdam; mark.lammers@vu.nl
 # (c) 2018. Released under the terms of the GNU General Public License v3.
 
+# This function is designed for the purpose of splitting the 9th column of a genome annotation's GFF file
+# into a table with all values sorted into the appropriate columns.
+# It can be applied to similarly disorganized data as long as the splits are used in a consistent manner
+
 #Version 1.0
 # splitstring<-function(dataframe, column, primary.sep=';', secondary.sep='='){
 #   # print("Example: splitstring(dataframe=vcf, column='INFO', primary.sep=';', secondary.sep='=')")

@@ -31,7 +31,7 @@ R.to.Rscript<-function(R.file){
   script<-gsub(pattern = '/R_startup_script.R', #Whenever my R startup script is called, call a Rscript-friendly version
                replacement = '/systeembeheer/crontab/R_startup_script.Rscript',
                x = script, fixed = T)
-  script<-gsub(pattern = "user = 'MarkLammers'", #Whenever my R startup script is called, call a Rscript-friendly version
+  script<-gsub(pattern = "user = 'MarkLammers'",
                replacement = "user = 'auto-update'",
                x = script, fixed = T)
   

@@ -14,9 +14,10 @@ now<-function(precision='seconds'){ #default precision
   #if precision is desired, change R glocal options
   if(precision=='milliseconds' | precision=='millisec' | precision=='ms'){
     options(digits.secs=3)
-  }
-  if(precision=='microseconds' | precision=='microsec' | precision=='us'){
+  } else if(precision=='microseconds' | precision=='microsec' | precision=='us'){
     options(digits.secs=6)
+  } else {
+    options(digits.secs=0)
   }
   
   #Get the current time and break it up

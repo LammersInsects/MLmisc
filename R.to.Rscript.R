@@ -28,6 +28,7 @@ R.to.Rscript<-function(R.file){
   }
   
   #change other specific strings
+  #TODO allow flexible input using a 2-column table
   script<-gsub(pattern = '/R_startup_script.R', #Whenever my R startup script is called, call a Rscript-friendly version
                replacement = '/systeembeheer/crontab/R_startup_script.Rscript',
                x = script, fixed = T)

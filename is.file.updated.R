@@ -24,6 +24,9 @@ is.file.updated<-function(full.file.path){
   }
   
   #check date and time: less than 5 minutes old?
+  if(!file.info(full.file.path)$mtime > (Sys.time() - 300)){
+    stop("The file's last modification is more than 5 minutes ago!")
+  }
   
   return()
 }

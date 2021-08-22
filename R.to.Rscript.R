@@ -38,6 +38,11 @@ R.to.Rscript<-function(R.file){
   
   #export the script into the same folder 
   dest<-paste(R.file,'script',sep='')
-  print(paste('Converted R script is saved as ',dest,sep=''))
   writeLines(text = script, con = dest, useBytes = T)
+  
+  if(is.file.updated(dest)){
+    print(paste('Converted R script is saved as ',dest,sep=''))
+  } else {
+    print('ERROR')
+  }
 }

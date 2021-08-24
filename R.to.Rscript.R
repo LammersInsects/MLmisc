@@ -40,9 +40,9 @@ R.to.Rscript<-function(R.file){
   dest<-paste(R.file,'script',sep='')
   writeLines(text = script, con = dest, useBytes = T)
   
-  if(is.file.updated(dest)){
-    print(paste('Converted R script is saved as ',dest,sep=''))
+  if(is.file.updated(dest, seconds.before.now = 10)){
+    cat('Converted R script is saved as ',dest,sep='','\n')
   } else {
-    print('ERROR')
+    cat('ERROR: For unknown reasons, the R script is not saved to ',dest,sep='','\n')
   }
 }

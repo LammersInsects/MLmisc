@@ -2,7 +2,7 @@
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
 # Define function
-R.to.Rscript<-function(R.file){
+R.to.Rscript<-function(R.file, quiet=F){
   #run a number of checks
   if(!file.exists(R.file)){
     stop('File does not exist!')
@@ -41,7 +41,9 @@ R.to.Rscript<-function(R.file){
   writeLines(text = script, con = dest, useBytes = T)
   
   if(is.file.updated(dest, seconds.before.now = 10)){
-    cat('Converted R script is saved as ',dest,sep='','\n')
+    if(!quiet){
+      cat('Converted R script is saved as ',dest,sep='','\n')
+    }
   } else {
     cat('ERROR: For unknown reasons, the R script is not saved to ',dest,sep='','\n')
   }

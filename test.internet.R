@@ -7,7 +7,7 @@
 
 # Define function
 #Solution by eyjo at https://stackoverflow.com/questions/5076593/how-to-determine-if-you-have-an-internet-connection-in-r
-havingIP <- function() {
+havingIP <- function(){
   if (.Platform$OS.type == "windows") {
     ipmessage <- system("ipconfig", intern = TRUE)
   } else {
@@ -15,4 +15,8 @@ havingIP <- function() {
   }
   validIP <- "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
   any(grep(validIP, ipmessage))
+}
+
+test.internet<-function(){
+  havingIP() & curl::has_internet()
 }

@@ -40,7 +40,7 @@ R.to.Rscript<-function(R.file, quiet=F){
   dest<-paste(R.file,'script',sep='')
   writeLines(text = script, con = dest, useBytes = T)
   
-  if(is.file.updated(dest, seconds.before.now = 10)){
+  if(is.file.updated(dest, seconds.before.now = 30)){
     if(!quiet){
       cat('Converted R script is saved as ',dest,sep='','\n')
     }

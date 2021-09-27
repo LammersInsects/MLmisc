@@ -25,6 +25,9 @@ now<-function(precision='seconds'){ #default precision
   #Extract only numbers to get a timestamp
   string<-paste(broken$vect[broken$num], collapse = "")
   
+  #Convert to numeric
+  string<-as.numeric(string)
+  
   #restore default 
   options(digits.secs=0)
   

@@ -136,7 +136,7 @@ decode.workhorse<-function(x,
       }
     }
     if(datatype %in% c('not recognised yet','numeric complex','non-numeric complex')){
-      not.recognised.old<-read.table(paste(wd.base,'Common_scripts/database_package/patterns.not.recognised.log',sep=''),header=T,sep=';',quote='"')
+      not.recognised.old<-read.table(paste(wd.base,'Common_scripts/MLmisc/patterns.not.recognised.log',sep=''),header=T,sep=';',quote='"')
       not.recognised<-data.frame(start=full,
                                  datatype=datatype,
                                  transl=transl,
@@ -146,7 +146,7 @@ decode.workhorse<-function(x,
                                  splitted=splitted)
       not.recognised<-rbind(not.recognised.old,not.recognised)
       not.recognised<-unique(not.recognised)
-      write.table(not.recognised,file=paste(wd.base,'Common_scripts/database_package/patterns.not.recognised.log',sep=''),row.names=F,sep=';')
+      write.table(not.recognised,file=paste(wd.base,'Common_scripts/MLmisc/patterns.not.recognised.log',sep=''),row.names=F,sep=';')
     }
     #     if(patt.noS=='llln'){
     #       datatype<-'this needs work'

@@ -36,7 +36,7 @@ github2R<-function(github.full.link){
   result<-gsub('blob/','',result)
   
   #load the script into R
-  source_https(result)
+  source(result)
   
   #check success
   #TODO

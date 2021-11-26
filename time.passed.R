@@ -35,6 +35,8 @@ time.passed<-function(start, end, return.it=F){ #start and end should be timesta
     end<-paste(as.numeric(end),paste(rep(0,20-end.n),collapse=''),sep='') #add as many zeros as required
   }
   
+  #Finally figured out the bug that gives wrong time calculation: forgot to convert the times back with strptime!!!
+  #TODO Adapt all lines below to fix this issue
   if((as.numeric(end)-as.numeric(start))<60000000){ #when something takes less than a minute,
     tp<-(as.numeric(end)-as.numeric(start))/1000000 #report output in decimal seconds
     tp<-round(tp,digits=min(start.n,end.n)-14) #strip any decimals that are below the input precision

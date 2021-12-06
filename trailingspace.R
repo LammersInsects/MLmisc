@@ -3,10 +3,14 @@
 
 # This function takes a vector, checks for trailing whitespaces, and returns a same-sized vector with the values without trailing spaces
 
-trailingspace<-function(x){
+trailingspace<-function(x,
+                        quiet=T){
   y<-x
   trailing.space<-lapply(x,function(v){substr(v,nchar(v),nchar(v)+1)})==' ' #test whether the last character is a space
   trailing.space<-ifelse(is.na(trailing.space),F,trailing.space) #if a value is NA, than include FALSE in the test vector
+  if(!quiet){
+    cat('Removed',sum(trailing.space),'trailing space(s)\n')
+  }
   y[trailing.space]<-sapply(x[trailing.space],function(f){substr(f,1,nchar(f)-1)}) #for values with a trailing space, rm last character
   return(unlist(y))
 }

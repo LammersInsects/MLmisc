@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load test data 
+# Load test data
 # xxmxxf<-c("169m47f", NA, "21m4f", "182m63f", "2m", "15f", "105m18f", NA, "169m60f", "[many]", "0m24f", "0m0f")
 # males.females(xxmxxf = xxmxxf)
 

@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # df<-read.table('D:/DATA/Projects_home/Takenlijst/Database/20201203.Takenlijst.registry.backup', sep=';', header=T)
 # df[grep('Austr',df$Wat),]
 
@@ -25,10 +25,10 @@
 detect.encoding.issues<-function(x){
   if(class(x)!='character'){
     print('WARNING: This function has only been tested on character vectors')
-  } 
+  }
   unlist(lapply(x, function(i){
     #try to count number of characters of the string, it will fail if there is an encoding issue, giving class 'try-error'
-    tt<-class(try(nchar(i), silent = T))=='try-error' 
+    tt<-class(try(nchar(i), silent = T))=='try-error'
     return(tt)
   }))
 }

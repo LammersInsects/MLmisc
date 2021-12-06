@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 
 # Reformat data
 
@@ -16,7 +16,7 @@ NA.harmonizer<-function(dataframe){
   }
   df<-dataframe
   #NAs typed into Excel are often not recognised, so replace
-  df[sapply(df,function(x){as.character(x)=='NA' & !is.na(x)})]<-NA 
+  df[sapply(df,function(x){as.character(x)=='NA' & !is.na(x)})]<-NA
   return(df)
 }
 

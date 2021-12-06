@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # start<-now()
 # end<-now()
 # time.passed(start, end)

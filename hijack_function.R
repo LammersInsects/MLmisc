@@ -12,7 +12,7 @@
 #   data.frame(..., stringsAsFactors = stringsAsFactors)
 # }
   
-## Option 2: more elaborate, can change multiple parameters  
+## Option 2: more elaborate, can change multiple parameters
 hijack <- function(FUN, ...){
   .FUN <- FUN
   args <- list(...)

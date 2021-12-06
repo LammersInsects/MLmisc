@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 
 # Reformat data
 
@@ -58,18 +58,18 @@ write.default.xlsx<-function(dataframe,
   #++++++++++++++++++++
   
   # Title and sub title styles
-  TITLE_STYLE <- CellStyle(wb)+ Font(wb,  heightInPoints=16, 
-                                     #color="blue", 
+  TITLE_STYLE <- CellStyle(wb)+ Font(wb,  heightInPoints=16,
+                                     #color="blue",
                                      isBold=TRUE, underline=1)
-  SUB_TITLE_STYLE <- CellStyle(wb) + 
-    Font(wb,  heightInPoints=11, 
+  SUB_TITLE_STYLE <- CellStyle(wb) +
+    Font(wb,  heightInPoints=11,
          isItalic=TRUE, isBold=FALSE)
   
   # Styles for the data table row/column names
   TABLE_ROWNAMES_STYLE <- CellStyle(wb) + Font(wb, isBold=TRUE)
   TABLE_COLNAMES_STYLE <- CellStyle(wb) + Font(wb, isBold=TRUE) +
     Alignment(wrapText=TRUE, horizontal="ALIGN_CENTER") +
-    Border(color="black", position=c("TOP", "BOTTOM"), 
+    Border(color="black", position=c("TOP", "BOTTOM"),
            pen=c("BORDER_THIN", "BORDER_THICK"))
   
   # Create a new sheet in the workbook
@@ -79,7 +79,7 @@ write.default.xlsx<-function(dataframe,
   # Helper function to add titles
   #++++++++++++++++++++++++
   # - sheet : sheet object to contain the title
-  # - rowIndex : numeric value indicating the row to 
+  # - rowIndex : numeric value indicating the row to
   #contain the title
   # - title : the text to use as title
   # - titleStyle : style object to use for title
@@ -90,11 +90,11 @@ write.default.xlsx<-function(dataframe,
     setCellStyle(sheetTitle[[1,1]], titleStyle)
   }
   # Add title
-  xlsx.addTitle(sheet, rowIndex=1, 
+  xlsx.addTitle(sheet, rowIndex=1,
                 title=file.name,
                 titleStyle = TITLE_STYLE)
   # Add sub title
-  xlsx.addTitle(sheet, rowIndex=2, 
+  xlsx.addTitle(sheet, rowIndex=2,
                 title=subtitle,
                 titleStyle = SUB_TITLE_STYLE)
   # Add a table

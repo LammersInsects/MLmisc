@@ -28,7 +28,7 @@ splitstring<-function(dataframe, column, targets='all', primary.sep=';', seconda
   splitted<-sapply(1:nrow(dataframe), function(x){
     lst<-unlist( lapply(dataframe[x,column],strsplit,primary.sep) )
     splitted<-sapply(1:length(lst), function(y){
-      col<-strsplit(lst[y], secondary.sep)[[1]][1] 
+      col<-strsplit(lst[y], secondary.sep)[[1]][1]
       if(col=='INDEL'){ #this is handy when reading vcf files
         val<-1
       } else {

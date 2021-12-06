@@ -8,7 +8,7 @@
 survival.analysis<-function(dataframe,     # Line 1: Essentials
                             filename='results',
                             subexperiment.col=F,   # Line 2: Define columns - required when different from default
-                            Treatment.col='Treatment', 
+                            Treatment.col='Treatment',
                             Timevar=F,  #is assumed to be measured in days
                             Survival.col=F, #survival rate
                             Mortality.col=F, #mortality rate
@@ -30,7 +30,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
   #   filename='debugging'
   if(filename=='debugging'){
     subexperiment.col=F   # Line 2: Define columns - required when different from default
-    Treatment.col='Treatment' 
+    Treatment.col='Treatment'
     Timevar=F  #is assumed to be measured in days
     Survival.col=F #survival rate
     Mortality.col=F #mortality rate
@@ -54,15 +54,15 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
   #Load packages
   print('Note: The pipeline will install all dependencies on the first run. This might take a while.')
   options(warn = -1)
-  if (!require(car)) {install.packages('car')} 
+  if (!require(car)) {install.packages('car')}
   library(car)
-  if (!require(sciplot)) {install.packages('sciplot')} 
+  if (!require(sciplot)) {install.packages('sciplot')}
   library(sciplot)
-  if (!require(ggplot2)) {install.packages('ggplot2')} 
+  if (!require(ggplot2)) {install.packages('ggplot2')}
   library(ggplot2)
-  if (!require(RColorBrewer)) {install.packages('RColorBrewer')} 
+  if (!require(RColorBrewer)) {install.packages('RColorBrewer')}
   library(RColorBrewer)
-  if (!require(nlme)) {install.packages('nlme')} 
+  if (!require(nlme)) {install.packages('nlme')}
   library(nlme)
   if(!require(multcomp)){install.packages('multcomp')}
   library('multcomp')
@@ -76,7 +76,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
   print('Survived and Died are expected as individual-based data using binary variables (0 or 1) specifying if an individual died or not')
   print('Input cannot logically contain a combination of these 3 data types! (although aggregate and rates might?)')
   
-  ## But first we need te check some other data properties and store input independent of type of data frame 
+  ## But first we need te check some other data properties and store input independent of type of data frame
   
   # Check for empty columns and remove these
   df.withemptycol<-ncol(df)
@@ -88,7 +88,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     print('No empty columns found')
   }
   
-  # Check for rows with NAs in bodysize and remove these lines 
+  # Check for rows with NAs in bodysize and remove these lines
   df.NA<-df[0,]
   if(Bodysize.col!=F){
     if(is.numeric(df[,Bodysize.col])){
@@ -97,7 +97,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     } else {
       print('WARNING: non-numeric Bodysize.col!'); stop()
     }
-  } 
+  }
   df.NA<-rbind(df.NA,df[sapply(df[,Treatment.col],nchar)==0,])
   if(nrow(df.NA)>0){
     print(paste(nrow(df.NA),'rows with NAs found. These are removed from the analysis:'))
@@ -121,7 +121,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     print('WARNING! control.treatment is not specified. Should it?')
   }
   
-  # Check for presence of experiment substructure (e.g. RNAi_Target, Strain, Block, ...) 
+  # Check for presence of experiment substructure (e.g. RNAi_Target, Strain, Block, ...)
   if(subexperiment.col==F){
     print('No experiment substructure found')
     groups<-'groupdummyvar'
@@ -298,7 +298,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
                         survived=c(rep(1,df.ag$surviving[1]),rep(0,df.ag$samplesize[1]-df.ag$surviving[1])))
     for(i in 2:nrow(df.ag)){
       df.long.extension<-data.frame(treatment=rep(df.ag$treatment[i],df.ag$samplesize[i]),
-                                    groupstructure=rep(df.ag$groupstructure[i],df.ag$samplesize[i]), 
+                                    groupstructure=rep(df.ag$groupstructure[i],df.ag$samplesize[i]),
                                     randomeffect=rep(df.ag$randomeffect[i],df.ag$samplesize[i]),
                                     survived=c(rep(1,df.ag$surviving[i]),rep(0,df.ag$samplesize[i]-df.ag$surviving[i])))
       df.long<-rbind(df.long,df.long.extension)
@@ -344,7 +344,7 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
   #   } else {
   #     df$Treatment<-df[,Treatment.col]
   #   }
-  #   
+  #
   
   #Check Mortality data: exclude negative Mortality // THIS BLOCK IS KEPT AS A REMINDER THAT CHECKS FOR IMPOSSIBLE DATA MIGHT NEED TO BE RUN
   #   impossible<-subset(df,df$Mortality<0 | df$Mortality>1) #Check for impossible data (i.e. negative mortality and remove these)
@@ -386,9 +386,9 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
   #   if(Timevar!=F){
   #     MORTALITY.time<-summarySE(df,measurevar = 'Mortality', groupvars = c('FeedingTreatment','Timevar'))
   #   }
-  if(Bodysize.col==F){ 
+  if(Bodysize.col==F){
     print('No body size data found')
-  } else { 
+  } else {
     BODYSIZE<-summarySE(data = df.long, measurevar = 'bodysize', groupvars = c('treatment','groupstructure'))
     print(BODYSIZE)
     bodysize.minmax<-c(min(df.long$bodysize,na.rm=T),max(df.long$bodysize,na.rm=T))
@@ -402,8 +402,8 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     options(warn = -1)
     par(mfrow=c(1,1))
     
-    #Bodysize  data    
-    if(Bodysize.col!=F){ 
+    #Bodysize  data
+    if(Bodysize.col!=F){
       if(save.plots.as.pdfs){
         pdf(paste(today,'_',filename,'_Bodysize.density.plot.pdf',sep=''),width=11.69,height=8.27) # A4 landscape
       }
@@ -429,16 +429,16 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     #Set layout of graphic output and pre-calculate some graphic parameters
     old.par <- par(mfrow=c(2,3)) #ADAPT IF NECESSARY
     
-    for (i in treatments){      
+    for (i in treatments){
       title<-i #ifelse(nr.groups>1,i,NA)
-      df.s<-subset(df.rates,df.rates$treatment==i)      
+      df.s<-subset(df.rates,df.rates$treatment==i)
       colorset<-brewer.pal(nr.treatments+1,'Set1')
       colorset<-paste(colorset,'80',sep='')
       #       df.s.b<-subset(df.s,df.s$groupstructure==groups[1])
       #       barplot(df.s.b$mortality,col=colorset[1],names.arg=df.s.b$treatment,
       #               ylab='Mortality',
       #               ylim=c(0,1))
-      #       for (j in 2:nr.groups){ 
+      #       for (j in 2:nr.groups){
       #         df.s.b<-subset(df.s,df.s$groupstructure==groups[j])
       #         barplot(df.s.b$mortality,col=colorset[j],#names.arg=paste(df.s.b$treatment,df.s.b$Block),
       #                 ylim=c(0,1),add=T)
@@ -461,13 +461,13 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     #             ylim=c(0,1))
     
     if(nr.groups>1){
-      sciplot::bargraph.CI(x.factor=treatment, response=mortality, group=groupstructure, data=df.rates,           
+      sciplot::bargraph.CI(x.factor=treatment, response=mortality, group=groupstructure, data=df.rates,
                            err.width=0.02, ylim=c(0,1),legend=T,
                            ylab='Mortality',xlab='Treatment',main=filename)
     }
     
     if(Bodysize.col!=F){ #i.e. there is Bodysize data
-      boxplot(data=df.long, bodysize~treatment*as.factor(died), 
+      boxplot(data=df.long, bodysize~treatment*as.factor(died),
               main=filename, xlab="Treatment", ylab="Bodysize [um]",
               ylim=bodysize.minmax, las=2,
               col=c('grey30',treatments.key$color[2:nrow(treatments.key)]))
@@ -478,10 +478,10 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
       #                            ylab='Mortality',xlab='Treatment',main='Pupae')
       
       #Scatterplot of Mortality by Bodysize (UNTESTED)
-      #     
+      #
       #       plot(data=df.long, survived~bodysize, col=df.long$color.Treatment, pch=df.long$color.Treatment,
-      # #            xlim=bodysize.minmax, 
-      #            ylim=bodysize.minmax, 
+      # #            xlim=bodysize.minmax,
+      #            ylim=bodysize.minmax,
       #            main=title, xlab="Bodysize [um]", ylab="Mortality")
       #       legend("topleft",legend=treatments.key$Treatment,col=treatments.key$color,pch=treatments.key$color)
       #       for (j in unique(df.s$Treatment)){
@@ -492,17 +492,17 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
       #       }
       
       #       }
-    }      
+    }
     
     #Plots for time-sampled data (UNTESTED)
     #     if(Timevar!=F){
     #       if(save.plots.as.pdfs){
-    #         pdf(paste(today,'_',filename,'_Time.plots.pdf',sep=''),width=6,height=6) 
+    #         pdf(paste(today,'_',filename,'_Time.plots.pdf',sep=''),width=6,height=6)
     #       }
     #       #http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/
     #       pd <- position_dodge(0.1) # move them .05 to the left and right
-    #       
-    #       time.plot.mortality<-ggplot(MORTALITY.time, aes(x=Timevar, y=Mortality, colour=FeedingTreatment, group=FeedingTreatment)) + 
+    #
+    #       time.plot.mortality<-ggplot(MORTALITY.time, aes(x=Timevar, y=Mortality, colour=FeedingTreatment, group=FeedingTreatment)) +
     #         geom_errorbar(aes(ymin=Mortality-se, ymax=Mortality+se), colour="black", width=.1, position=pd) +
     #         geom_line(position=pd) +
     #         geom_point(position=pd, size=4, shape=21, fill="white") + # 21 is filled circle
@@ -513,15 +513,15 @@ survival.analysis<-function(dataframe,     # Line 1: Essentials
     #                          l=40) +                    # Use darker colors, lightness=40
     #         ggtitle(paste(today,filename)) +
     #         expand_limits(y=0, x=c(0,10)) +                        # Expand y range
-    #         scale_y_continuous(c(0,1)) + #     breaks=pretty(survival.minmax,n=10)) +     
-    #         scale_x_continuous(breaks=pretty(c(min(df$Day),max(df$Day)+1),n=10)) +  
+    #         scale_y_continuous(c(0,1)) + #     breaks=pretty(survival.minmax,n=10)) +
+    #         scale_x_continuous(breaks=pretty(c(min(df$Day),max(df$Day)+1),n=10)) +
     #         theme_bw() +
     #         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_blank()) +
     #         theme(legend.justification=c(1,0),
     #               legend.position=c(1,0))               # Position legend in bottom right
-    #       
+    #
     #       plot(time.plot.mortality)
-    #       
+    #
     #       if(save.plots.as.pdfs){ dev.off() }
     #     }
   }

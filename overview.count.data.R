@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # data<-df
 # treatment.col<-'treatment'
 # count.col<-'first_landing_on'

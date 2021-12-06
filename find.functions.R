@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # find.functions(list.of.funs)
 # character.vector<-list.of.funs
 
@@ -26,7 +26,7 @@ find.functions<-function(character.vector, quiet=F, return.unknown=F){
   df.res<-as.data.frame(t(res.findfun))
   
   #extract the most basic package where the function name is found
-  df.res$last.res<-mapply(`[`, df.res[,1], sapply(df.res[,1],length)) 
+  df.res$last.res<-mapply(`[`, df.res[,1], sapply(df.res[,1],length))
   
   #test which do not match any known function
   res<-df.res$last.res=='No_results_found'

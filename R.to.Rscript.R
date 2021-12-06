@@ -36,7 +36,7 @@ R.to.Rscript<-function(R.file, quiet=F){
                replacement = "user = 'auto-update'",
                x = script, fixed = T)
   
-  #export the script into the same folder 
+  #export the script into the same folder
   dest<-paste(R.file,'script',sep='')
   writeLines(text = script, con = dest, useBytes = T)
   

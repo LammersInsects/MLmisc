@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # testdata<-c(-79,-1.1,-0.9,-0.1,0,1,0.1,0.9,1.1,79,'a','A','%','1%','0','1','0,1','0,9','1,1','79','2020-05-23',NA,'')
 # output<-data.type(testdata) # run data.type.R with test data
 

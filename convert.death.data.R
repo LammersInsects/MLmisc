@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # df<-read.table('Aphaereta_longevity_exp1.csv', sep=';', header=T)
 
 # Reformat data
@@ -15,7 +15,7 @@
 #test function
 # result<-convert.death.data.R(data = df, start.exp = '05.07.2019')
 # result<-convert.death.data.R(data = df, start.exp = '05.07.2019', death.count.columns=c('males', 'females'))
-# result<-convert.death.data.R(data = df, start.exp = '04.07.2019') 
+# result<-convert.death.data.R(data = df, start.exp = '04.07.2019')
 # rm(result)
 
 # Define function
@@ -69,7 +69,7 @@ convert.death.data.R<-function(data, #the data frame with death counts
   
   for(line in 1:nrow(df)){
     record<-df[line,]
-    new.counts<-cumul[cumul$ID==record$ID & cumul$Date==record$Date,death.count.columns] - 
+    new.counts<-cumul[cumul$ID==record$ID & cumul$Date==record$Date,death.count.columns] -
       record[,death.count.columns]
     cumul[cumul$ID==record$ID & cumul$Date>record$Date,death.count.columns] <- new.counts
     cumul[cumul$ID==record$ID & cumul$Date==record$Date,'deaths']<-T
@@ -91,4 +91,4 @@ convert.death.data.R<-function(data, #the data frame with death counts
 #   for(col in 1:length(death.count.columns)){
 #     lines(x = df.s$Date, y = df.s[,death.count.columns[col]], type='b')
 #   }
-# }  
+# }

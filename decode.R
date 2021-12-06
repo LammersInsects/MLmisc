@@ -12,7 +12,7 @@ decode.workhorse<-function(x,
     stop()
   }
   
-  #TODO instead of what's done here in an old version, apply breakdown.string() 
+  #TODO instead of what's done here in an old version, apply breakdown.string()
   
   #Define groups of character types
   L<-c(LETTERS,letters)
@@ -79,7 +79,7 @@ decode.workhorse<-function(x,
     transl.vect<-sapply(1:length(vect),function(x){tr[breakdown[x,2:6]==T]})
     transl<-paste(transl.vect,sep='',collapse='')
     
-    matrix<-data.frame(original=vect,transl=transl.vect)    
+    matrix<-data.frame(original=vect,transl=transl.vect)
     matrix$test<-lapply(1:length(vect),function(x){matrix$transl[x]!=matrix$transl[x-1]})
     matrix$test<-matrix$test==T
     matrix$test[1]<-T
@@ -87,12 +87,12 @@ decode.workhorse<-function(x,
     breaks<-paste(breaks.vect,collapse='|')
     
     patt.vect<-matrix$transl[matrix$test==T]
-    patt<-paste(patt.vect,collapse='')    
+    patt<-paste(patt.vect,collapse='')
     patt.noS<-gsub('s','',patt)
     
     splitted.vect<-substring(full,breaks.vect,c((breaks.vect-1)[2:length(breaks.vect)],length(vect)))
     decoded<-data.frame(splitted=splitted.vect,pattern=patt.vect)
-    splitted<-paste(splitted.vect,collapse='|')    
+    splitted<-paste(splitted.vect,collapse='|')
   } else {
     transl<-'not required'
     breaks<-'not required'

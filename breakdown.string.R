@@ -6,7 +6,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 
 # Define a function
 breakdown.string<-function(string, debugging = F){

@@ -18,7 +18,7 @@ impact2whisky<-function(IF, print.help=T){
     cat('in celebration of every first author paper\n')
     cat('usage: impact2whisky(IF)\n')
   }
-  euro <- 40*log10(2*(IF+1)) #Arbitrary conversion formula 
+  euro <- 40*log10(2*(IF+1)) #Arbitrary conversion formula
   euro <- round(euro,2)
   print(paste('Impactfactor',IF,'corresponds to',euro,'euro for a bottle of whisky'))
   print('Enjoy!')

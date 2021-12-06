@@ -554,9 +554,9 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
     #   glm.lipids<-glm(data=df, formula=df$Lipids~df$Treatment+df$Tibia)
     #   print(summary(glm.lipids))
     #   plot(df$Lipids,resid(glm.lipids),col=df$color.Treatment)
-    #   
+    #
     #   #Mixed-effects model
-    #   m4Tot <- lme(data=df, Lipids ~ Treatment + Tibia, random =~1|Number, 
+    #   m4Tot <- lme(data=df, Lipids ~ Treatment + Tibia, random =~1|Number,
     #                na.action = na.omit, method= "ML")
     #   anova(m4Tot)
     #   m4tot <- glht(m4Tot, mcp(Treat ="Tukey")) ## Or Dunnett when the two control treatments are combined?
@@ -564,7 +564,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
     
     
     
-    # Calculate residuals of the data from a model fitted to the controls 
+    # Calculate residuals of the data from a model fitted to the controls
     if(analysis.of.residuals){
       if(control.treatment==F){
         print('ERROR: control.treatment must be specified for analysis of residuals'); stop()
@@ -654,7 +654,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
             Dunnett <- glht(m, linfct=mcp(groupstructure="Dunnett"))
             print('Dunnett posthoc for deviation of expected Lipids as predicted by Tibia')
             print(summary(Dunnett))
-            #             
+            #
             #             if(random.effect.col!=F){
             #               print('Mixed-effects model with Dunnett posthoc')
             #               m2 <- lme(data=df.s, (Lipids-expected)~groupstructure, random =~1|Random, na.action = na.omit, method= "ML")
@@ -663,7 +663,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
             #               qqnorm(resid(m2))
             #               Dunnett.random <- glht(m2, mcp(groupstructure="Dunnett")) ## Or Dunnett when the two control treatments are combined?
             #               print(summary(Dunnett.random))
-            #               
+            #
             #               print('Model with random effect as factor with Dunnett posthoc')
             #               df.s$interactionoffactors<-interaction(df.s$groupstructure,df.s$Random)
             #               m3<-lm(data=df.s,(Lipids-expected)~interactionoffactors)
@@ -672,7 +672,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
             #               qqnorm(resid(m3))
             #               Dunnett.random <- glht(m3, mcp(interactionoffactors="Dunnett")) ## Or Dunnett when the two control treatments are combined?
             #               print(summary(Dunnett.random))
-            #               
+            #
             #             }
           }
           #Fat free dry weight
@@ -692,7 +692,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
           
           if(save.plots.as.pdfs){ dev.off() }
           
-        }        
+        }
       }
     }
     

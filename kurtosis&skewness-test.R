@@ -10,7 +10,7 @@ kurtosis.test <- function (x) {
   print('Both these tests are one-tailed, so you will need to multiply the p-value by 2 to become two-tailed. If your p-value become larger than one you will need to use 1-kurtosis.test() instead of kurtosis.test.')
 }
 
-#for skewness  
+#for skewness
 skew.test <- function (x) {
   m3 <- sum((x-mean(x))^3)/length(x)
   s3 <- sqrt(var(x))^3
@@ -23,7 +23,7 @@ skew.test <- function (x) {
   print('Both these tests are one-tailed, so you will need to multiply the p-value by 2 to become two-tailed. If your p-value become larger than one you will need to use 1-kurtosis.test() instead of kurtosis.test.')
   }
 
-#Both these tests are one-tailed, 
-#so you'll need to multiply the p-value by 2 to become two-tailed. 
-#If your p-value become larger than one 
-#you'll need to use 1-kurtosis.test() instead of kurtosis.test. 
+#Both these tests are one-tailed,
+#so you'll need to multiply the p-value by 2 to become two-tailed.
+#If your p-value become larger than one
+#you'll need to use 1-kurtosis.test() instead of kurtosis.test.

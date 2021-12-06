@@ -21,7 +21,7 @@
 # ignore windows tmp files starting with ~$
 ~$*
 
-# ignore all .pdf files 
+# ignore all .pdf files
 *.pdf
 
 ### Exclude R files

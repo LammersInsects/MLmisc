@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 
 # Reformat data
 
@@ -18,12 +18,12 @@ build.calendar<-function(begin.date,end.date){ #in R date format
   
   calendar<-data.frame(Year='',Month='',Weeknr='',calendar) #add columns for overview
   #fill the year, month and weeknumber columns:
-  calendar[substring(calendar$Date,5)=='-01-01','Year']<-strftime(calendar[substring(calendar$Date,5)=='-01-01','Date'],'%Y') 
-  calendar[1,'Year']<-strftime(calendar[1,'Date'],'%Y') 
+  calendar[substring(calendar$Date,5)=='-01-01','Year']<-strftime(calendar[substring(calendar$Date,5)=='-01-01','Date'],'%Y')
+  calendar[1,'Year']<-strftime(calendar[1,'Date'],'%Y')
   calendar[substring(calendar$Date,8)=='-01','Month']<-strftime(calendar[substring(calendar$Date,8)=='-01','Date'],'%B')
-  calendar[1,'Month']<-strftime(calendar[1,'Date'],'%B') 
+  calendar[1,'Month']<-strftime(calendar[1,'Date'],'%B')
   calendar[calendar$Day=='Monday','Weeknr']<-strftime(calendar[calendar$Day=='Monday','Date'],'%V')
-  calendar[1,'Weeknr']<-strftime(calendar[1,'Date'],'%V') 
+  calendar[1,'Weeknr']<-strftime(calendar[1,'Date'],'%V')
   
   #return output
   return(calendar)

@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 
 # Reformat data
 
@@ -28,7 +28,7 @@ now<-function(precision='seconds'){ #default precision
   #Convert to numeric
   string<-as.numeric(string)
   
-  #restore default 
+  #restore default
   options(digits.secs=0)
   
   return(string)

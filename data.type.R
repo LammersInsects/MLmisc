@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # testdata<-c(-79,-1.1,-0.9,-0.1,0,1,0.1,0.9,1.1,79,'a','A','%','1%','0','1','0,1','0,9','1,1','79','2020-05-23',NA,'')
 
 # Reformat data
@@ -56,7 +56,7 @@ data.type<-function(vector.to.test, quiet=F){
     print(analysis)
   }
   
-  #calculate scores for the input data types 
+  #calculate scores for the input data types
   output<-as.integer(analysis[1,])/length(to.test)
   names(output)<-names(analysis)
   output[1]<-length(to.test)

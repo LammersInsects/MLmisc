@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # files<-list.files()
 # files<-files[grep('.R',files, fixed = T)]
 # for(f in files){
@@ -34,7 +34,7 @@
 # Reformat data
 
 # Define function
-detect.functions<-function(function.to.check, 
+detect.functions<-function(function.to.check,
                            type = 'file'){ #file or function
   if(type=='file'){
     if(substr(function.to.check,nchar(function.to.check)-1,nchar(function.to.check))=='.R'){
@@ -71,7 +71,7 @@ detect.functions<-function(function.to.check,
     text.split.s<-unname(unlist(text.split.s))
     
     #split at opening brackets
-    list.of.potential.funs<-sapply(text.split.s,strsplit,'[(]') 
+    list.of.potential.funs<-sapply(text.split.s,strsplit,'[(]')
     if(length(list.of.potential.funs)==0){
       print('No functions found')
       return(NA)

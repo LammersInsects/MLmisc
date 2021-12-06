@@ -44,7 +44,7 @@ read.date.format<-function(input.vector){
   } else {
     if(all(nch %in% 8:10)){
       print('Input inlcudes lengths of 8-9 characters, not included in script yet')
-      #this would require a further analysis of the breakdown, 
+      #this would require a further analysis of the breakdown,
       #or automatic reformatting the input:
         #if 9 characters, try the script with an extra zero at 1, 4, 6, or 9 position
         #if 8 characters, it could be due to no separators, or two missing zeros

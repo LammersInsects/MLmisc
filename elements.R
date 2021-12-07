@@ -16,9 +16,13 @@ elements<-function(x, #input string
   if(is.na(x)){
     return(NA)
   } else {
-    result<-substring(x,seq(1,nchar(x),n),seq(n,nchar(x),n))
-    if(nchar(x)%%n>0){
-      print(paste('Warning: last',nchar(x)%%n>0,'characters are omitted!'))
+    if(n==1){
+      result<-unlist(strsplit(x,'')) #fast script
+    } else {
+      result<-substring(x,seq(1,nchar(x),n),seq(n,nchar(x),n)) #allround solution
+      if(nchar(x)%%n>0){
+        print(paste('Warning: last',nchar(x)%%n>0,'characters are omitted!'))
+      }
     }
     return(result)
   }

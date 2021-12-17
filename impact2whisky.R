@@ -10,6 +10,21 @@
 # under the License.
 #
 # by: M. Lammers, 2017
+#
+# Conditions for whisky:
+# -Only first author publications count
+# -Shared first authorships count only for 75%
+# x=impact factor; y=amount of euros to be spend on whiskey
+# 
+# # Convert impact factor to whiskey
+# x <- 2.329  #Choose an impact factor
+# y <- 40*log10(2*(x+1)); y  #Arbitrary conversion formula to calculate euros
+# 
+# # Plot the relationship between impact and whiskey
+# x <- seq(0.1,30,0.1)
+# y <- 40*log10(2*(x+1))  #Same formula
+# plot(x,y, ylim=c(0,70), type='l')
+
 
 impact2whisky<-function(IF, print.help=T){
   if(print.help){

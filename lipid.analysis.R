@@ -422,8 +422,9 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
   ##############
   # Statistics #
   ##############
+  
   if(do.stats){
-    #Correlation between Tibia and FFDW (measures for body size)
+    #Comparing means and comparing distibution of body size across treatments
     if(Tibia.col!=F){ #i.e. there is Tibia data
       if(Timevar!=F){ #i.e. there is a Time variable
         m<-lm(data=df, formula=Tibia~df$FeedingTreatment*df$groupstructure*df$Timevar)
@@ -438,11 +439,18 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
           #and https://www.datanovia.com/en/lessons/ancova-in-r/
         } else {
           m<-lm(data=df, formula=Tibia~df$FeedingTreatment)
+          ks<-ks.test(x=df$Tibia[df$FeedingTreatment==LIPIDS$Treatment[1]],
+                      y=df$Tibia[df$FeedingTreatment==LIPIDS$Treatment[2]])
         }
       }
-      print('Testing for differences in body size between treatments')
+      print('Testing for differences in mean body size between treatments')
       print(anova(m))
+      print('Testing whether the distributions of body size between treatments differ, but currently for the first two treatments only! Namely:')
+      print(LIPIDS$Treatment[1:2])
+      print(k)
     }
+    
+    #TODO Correlation between Tibia and FFDW (measures for body size)
     
     #Check normal distribution of lipids data
     #Each treatment separately

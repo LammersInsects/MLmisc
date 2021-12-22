@@ -341,6 +341,18 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
               col=c('grey30',treatments.key$color[2:nrow(treatments.key)]))
       par(mfrow=c(1,1))
       mtext(paste(today,filename),3,3)
+      
+      #Violin plot for perc lipids per treatment
+      p <- ggplot(df, aes(x=Treatment, y=perc.lipid, fill=Treatment)) +
+        geom_violin(trim = TRUE)+
+        ylim(0,40)+
+        # geom_boxplot(width=0.1, fill="white")+ theme_minimal()+
+        geom_point(position = position_jitter(seed = 1, width = 0.1)) +
+        xlab("Treatment")+
+        ylab("Lipids [ w/w % ]")+
+        theme_bw()
+      plot(p)
+      
     }
     
     options(warn = 0)

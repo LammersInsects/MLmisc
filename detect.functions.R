@@ -45,7 +45,8 @@ detect.functions<-function(function.to.check,
     }
   } else if(type=='function'){
     #read the function text
-    ftext<-as.character(body(function.to.check))
+    #TODO this is not working at all
+    # ftext<-as.character(body(function.to.check))
   } else { #if it's not an R script, abort
     stop('This function is only meant to read R scripts, either saved as *.R or loaded in the Global Environment.')
   }

@@ -542,6 +542,12 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
           ancova.lipids<-aov(data=df, formula=df$Lipids~df$Tibia+df$Treatment)
           ancova.ffdw<-aov(data=df, formula=df$Fat.free_dw~+df$Tibia+df$Treatment)
           print('Using Tibia as covariate')
+          if(random.effect.col!=F){
+            m.rand <- lme(data=df, Lipids ~ Treatment + Tibia, random =~1|Random,
+                          na.action = na.omit, method= "ML")
+            print('First including a random effect as provided...')
+            print(anova(m.rand))
+          }
         } else { #i.e. there is no Tibia data
           ancova.lipids<-aov(data=df, formula=df$Lipids~df$Fat.free_dw+df$Treatment)
           print('Using FFDW as a covariate for lipid level because no Tibia data is found. Validity should be checked!')
@@ -575,13 +581,8 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
     #   print(summary(glm.lipids))
     #   plot(df$Lipids,resid(glm.lipids),col=df$color.Treatment)
     #
-    #   #Mixed-effects model
-    #   m4Tot <- lme(data=df, Lipids ~ Treatment + Tibia, random =~1|Number,
-    #                na.action = na.omit, method= "ML")
-    #   anova(m4Tot)
     #   m4tot <- glht(m4Tot, mcp(Treat ="Tukey")) ## Or Dunnett when the two control treatments are combined?
-    #   summary(m4tot)
-    
+    #   summary(m4tot) #Mixed-effects model
     
     
     # Calculate residuals of the data from a model fitted to the controls
@@ -718,7 +719,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
     
     #Here analyse the lipid levels in percentages, a method for dealing with high heteroscedasticity
     print('In case the data is unacceptibly heteroscedastic, use the following analysis of lipid percentages')
-    if(length(groups)==1){
+    if(nr.groups==1){
       if(length(treatments)==2){
         w1<-wilcox.test(df$perc.lipid~df$Treatment)
         print('Mann-Whitney U test for lipid percentage over treatment:')
@@ -727,6 +728,12 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
         w1<-kruskal.test(df$perc.lipid~df$Treatment)
         print('Kruskal-Wallis test for lipid percentage over treatment:')
         print(w1)
+      }
+      if(random.effect.col!=F){
+        m.rand <- lme(data=df, perc.lipid ~ Treatment, random =~1|Random,
+                      na.action = na.omit, method= "ML")
+        print('Also running a mixed model including a random effect as provided...')
+        print(anova(m.rand))
       }
       if(w1$p.value<0.05){
         print(PERCLIPIDS)

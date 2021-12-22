@@ -88,9 +88,14 @@ detect.input.variables<-function(function.to.check,
             cat('Some lines in',func.name,' contain more than one variable\n')
           }
           vars<-unlist(vars)
+          #separate variables from defaults
+          default<-strsplit(vars, '=', fixed = T)
+          vars<-sapply(default,`[`,1)
+          default<-sapply(default,`[`,2)
           #create table to append to output
           found<-data.frame(func=func.name,
                             variables=unname(vars),
+                            default=default,
                             comments=names(vars),
                             row.names = NULL)
           #drop the function close

@@ -22,5 +22,9 @@ trailingspace<-function(x,
     cat('Removed',sum(to.do),'trailing space(s)\n')
   }
   
+  #TODO test again whether there are trailing spaces
+  #if desired (use variable loop.till.done with F as default)
+  #then apply the same function again
+  
   return(unlist(y))
 }

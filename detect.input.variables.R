@@ -99,7 +99,14 @@ detect.input.variables<-function(function.to.check,
                             comments=names(vars),
                             row.names = NULL)
           #drop the function close
-          found<-found[!found$variables %in% c('){'),]
+          # found<-found[!found$variables %in% c('){'),] #maybe not, because then functions without variables are not reported
+          found$variables<-gsub('){','',found$variables,fixed=T)
+          found$default<-gsub('){','',found$default,fixed=T)
+          #TODO remove results that are caused be excessive white spaces between variable and comment
+          # if(nrow(found)>1){
+          #   space.only<-sapply(sapply(sapply(found$variables,elements),`==`,' '),all)
+          #   found<-found[!(space.only & emptyvalues(found$default)),]
+          # }
           
           #append it
           output<-rbind(output,found)

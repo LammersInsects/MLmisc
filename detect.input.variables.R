@@ -55,7 +55,7 @@ detect.input.variables<-function(function.to.check,
           func.name<-unlist(strsplit(func, '<-', fixed = T))[1]
           func.name<-trailingspace(func.name)
           #find the first closing bracket
-          end<-potential.ends[potential.ends-start[ln]>0][1]
+          end<-potential.ends[potential.ends-start[ln]>=0][1]
           #extract lines with variables
           vars<-names(text.nohash[start[ln]:end])
           #drop the function call

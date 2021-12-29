@@ -43,6 +43,7 @@ trailingspace<-function(x,
       y[all.space]<-'' #space-only strings still consist of a single space, remove that
     } else {
       y[all.space]<-x[all.space] #space-only strings are reduced to a single space, restore to original length
+      to.do<-to.do - sum(all.space)
     }
   }
   

@@ -16,7 +16,7 @@ trim.EOL.whitespace.from.file<-function(file,
   }
   
   #detect trailing spaces and remove them
-  ftext.trimmed<-trailingspace(ftext, apply.to.string.with.only.whitespace = F, quiet = F)
+  ftext.trimmed<-trailingspace(ftext, last.character.only = F, apply.to.string.with.only.whitespace = F, quiet = F)
   
   #write trimmed file
   if(overwrite){

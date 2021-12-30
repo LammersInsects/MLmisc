@@ -10,7 +10,6 @@
 # Reformat data
 
 # Define function
-checksumfolder<-paste(wd.base,'Common_scripts/checksums/',sep='')
 write.default.xlsx<-function(dataframe,
                              filepath=NA,
                              filename=paste(today,'debugging','xlsx',sep='.'),

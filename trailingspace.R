@@ -9,7 +9,10 @@ trailingspace<-function(x,
                         apply.to.string.with.only.whitespace=T,
                         quiet=T){
   y<-x
+  datatype<-class(x)
+  x<-as.character(x)
   all.space<-unlist(lapply(lapply(strsplit(as.character(x),''),`==`,' '),all))
+  all.space[emptyvalues(x)]<-F
   
   if(last.character.only){
     trailing.space<-lapply(x,function(v){substr(v,nchar(v),nchar(v)+1)})==' ' #test whether the last character is a space
@@ -51,5 +54,8 @@ trailingspace<-function(x,
     cat('Removed trailing space(s) from',sum(to.do),'lines\n')
   }
   
-  return(unlist(y))
+  #Format output
+  y<-unlist(y)
+  class(y)<-datatype
+  return(y)
 }

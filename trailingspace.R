@@ -28,19 +28,20 @@ trailingspace<-function(x,
     y[to.do]<-lapply(x[to.do],function(f){substr(f,1,nchar(f)-1)})
     
   } else { #remove any number of trailing spaces
-    lengths<-lapply(x, nchar) #store lengths of the input strings
-    positions<-lapply(nchar(x),`:`,1) #create reverse vectors for each of the strings
-    broken<-lapply(x,elements) #break up the strings into separate elements
+    x.notempty<-!emptyvalues(x)
+    lengths<-lapply(x[x.notempty], nchar) #store lengths of the input strings
+    positions<-lapply(nchar(x[x.notempty]),`:`,1) #create reverse vectors for each of the strings
+    broken<-lapply(x[x.notempty],elements) #break up the strings into separate elements
     broken.rev<-lapply(broken,rev) #reverse those
     not.spaces<-lapply(broken,`!=`,' ') #test which elements are not spaces
     starts<-mapply(`[`,positions,not.spaces, SIMPLIFY = F) #positions of the non-spaces in the strings
     starts<-lapply(starts,tail,1) #take the lowest position
-    starts[all.space]<-lengths[all.space] #strings with only spaces have empty values, fill them
+    starts[all.space[x.notempty]]<-lengths[all.space[x.notempty]] #strings with only spaces have empty values, fill them
     to.do<-sum(unlist(starts)!=1) #calculate how many lines are edited
     keep<-mapply(`:`,starts,lengths, SIMPLIFY = F) #store all the character positions to keep
     res<-mapply(`[`,broken.rev,keep, SIMPLIFY = F) #extract those from the stored elements of the strings
     res<-lapply(res,rev) #revert them back to the normal string order
-    y<-lapply(res,paste,collapse='') #collapse the characters back into strings
+    y[x.notempty]<-lapply(res,paste,collapse='') #collapse the characters back into strings
     
     if(apply.to.string.with.only.whitespace){
       y[all.space]<-'' #space-only strings still consist of a single space, remove that

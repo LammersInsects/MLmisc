@@ -8,36 +8,33 @@
 
 # Define function
 time.passed<-function(start, end, return.it=F){ #start and end should be timestamps as produced by now()
+  #normalize date-times
+  times<-strptime(c(end,start), format='%Y%m%d%H%M%S')
+  ds<-options("digits.secs")
+  
+  #assess decimal seconds
   start.n<-nchar(start)
   end.n<-nchar(end)
-  if(min(start.n,end.n)<14){
+  precision<-min(start.n,end.n)-14
+  if(precision<0){
     stop('ERROR: Number of characters of input indicates precision is above the seconds. Is the input produced by MLmisc::now()?')
-  } else if(min(start.n,end.n)==14){ #Precision should be in seconds
-    
-  } else if(min(start.n,end.n)>14){ #Precision in decimal seconds
-    
+  } else if(precision==0){ #Precision should be in seconds
+    options("digits.secs"=0)
+  } else if(precision>0){ #Precision in decimal seconds
+    options("digits.secs"=precision)
+    times.s<-as.numeric(substr(c(end,start),15,c(end.n,start.n)))/10^precision
+    times<-times+times.s
   }
   
-  #default for seconds precision
-  tp<-difftime(strptime(x = end, format = '%Y%m%d%H%M%S'), strptime(x = start, format = '%Y%m%d%H%M%S'))
+  #calculate exact time difference
+  tp<-difftime(times[1], times[2])
   
-  if(start.n<20){ #microsecond precision has 20 characters
-    start<-paste(as.numeric(start),paste(rep(0,20-start.n),collapse=''),sep='') #add as many zeros as required
-    #the as.numeric doesn't help to remove the unwanted precision. Instead the precision should be removed in now()
-  }
-  if(end.n<20){ #microsecond precision has 20 characters
-    end<-paste(as.numeric(end),paste(rep(0,20-end.n),collapse=''),sep='') #add as many zeros as required
-  }
-  
-  #Finally figured out the bug that gives wrong time calculation: forgot to convert the times back with strptime!!!
-  #TODO Adapt all lines below to fix this issue
-  if((as.numeric(end)-as.numeric(start))<60000000){ #when something takes less than a minute,
-    tp<-(as.numeric(end)-as.numeric(start))/1000000 #report output in decimal seconds
-    tp<-round(tp,digits=min(start.n,end.n)-14) #strip any decimals that are below the input precision
-    tp<-as.difftime(tp, units = 'secs')
-  } #else use default difftime
-  
+  #report result
   print(paste('Time passed:',format(tp)))
+  
+  #reset digits
+  options("digits.secs"=ds)
+  
   if(return.it){
     return(tp)
   }

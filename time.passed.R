@@ -1,16 +1,10 @@
 # Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
-# Load packages
-# if(!require('')){install.packages('')}
-# library('')
-
-# Load data
-# start<-now()
-# end<-now()
-# time.passed(start, end)
-
-# Reformat data
+# Test data
+# start<-now(); Sys.sleep(2.5); end<-now(); time.passed(start, end)
+# start<-now(precision = 'ms'); Sys.sleep(2.5); end<-now(precision = 'ms'); time.passed(start, end)
+# start<-now(precision = 'us'); Sys.sleep(2.5); end<-now(precision = 'us'); time.passed(start, end)
 
 # Define function
 time.passed<-function(start, end, return.it=F){ #start and end should be timestamps as produced by now()
@@ -48,7 +42,3 @@ time.passed<-function(start, end, return.it=F){ #start and end should be timesta
     return(tp)
   }
 }
-
-
-# Explore and plot data
-

@@ -33,7 +33,7 @@ time.passed<-function(start, end, return.it=F){ #start and end should be timesta
   print(paste('Time passed:',format(tp)))
   
   #reset digits
-  options("digits.secs"=ds)
+  options(ds)
   
   if(return.it){
     return(tp)

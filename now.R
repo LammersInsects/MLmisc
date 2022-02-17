@@ -11,6 +11,7 @@
 
 # Define function
 now<-function(precision='seconds'){ #default precision
+  ds<-options('digits.secs')
   #if precision is desired, change R glocal options
   if(precision=='milliseconds' | precision=='millisec' | precision=='ms'){
     options(digits.secs=3)
@@ -33,7 +34,7 @@ now<-function(precision='seconds'){ #default precision
   string<-as.numeric(string)
   
   #restore default
-  options(digits.secs=0)
+  options(ds)
   
   return(string)
 }

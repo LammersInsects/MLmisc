@@ -1,13 +1,13 @@
 # Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2020. Released under the terms of the GNU General Public License v3.
 
-# Load packages
-# if(!require('')){install.packages('')}
-# library('')
-
-# Load data
-
-# Reformat data
+# Test data
+# res<-c()
+# for(i in 1:100){
+#   Sys.sleep(0.09)
+#   res<-rbind(res,c(i,now(precision = 'us')))
+# }
+# table(nchar(res[,2]))
 
 # Define function
 now<-function(precision='seconds'){ #default precision
@@ -33,6 +33,3 @@ now<-function(precision='seconds'){ #default precision
   
   return(string)
 }
-
-# Explore and plot data
-

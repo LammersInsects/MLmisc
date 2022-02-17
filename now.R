@@ -25,6 +25,10 @@ now<-function(precision='seconds'){ #default precision
   #Extract only numbers to get a timestamp
   string<-paste(broken$vect[broken$num], collapse = "")
   
+  #check number of characters, append zeros if necessary
+  string.n<-nchar(string)-14
+  string<-paste(string,rep(0,abs(string.n-getOption("digits.secs"))),sep='')
+  
   #Convert to numeric
   string<-as.numeric(string)
   

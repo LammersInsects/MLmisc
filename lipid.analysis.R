@@ -447,7 +447,7 @@ lipid.analysis<-function(dataframe, # Line 1: Essentials
       print(anova(m))
       print('Testing whether the distributions of body size between treatments differ, but currently for the first two treatments only! Namely:')
       print(LIPIDS$Treatment[1:2])
-      print(k)
+      print(ks)
     }
     
     #TODO Correlation between Tibia and FFDW (measures for body size)

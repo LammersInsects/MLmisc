@@ -30,17 +30,41 @@ males.females<-function(xxmxxf){
   check$test.mfu<-check$m<=1 & check$f<=1 & check$u<=1
   check$test.other<-check$other ==0
   check$test.len<-check$len-check$num-check$m-check$f-check$u ==0
-  check$result<-rowSums(check[,grep('test',colnames(check))])!=3
+  check$result<-rowSums(check[,grep('test',colnames(check))]) !=3
   if(sum(check$result)>0){
     print(paste('WARNING:',sum(check$result),'input value(s) do not specify males and females in format [xxmxxfxxu]:'))
     print(xxmxxf[!is.na(xxmxxf)][check$result])
   }
   
   #extract numbers of males, females and unknown
-  males<-as.integer(sapply(strsplit(xxmxxf, 'm'),head,n=1)) #gives a warning message if the string doesn't have an 'm'
-  print('If this gives a warning about introduced NAs, check input format. You should already have been warned.')
-  females<-sapply(strsplit(xxmxxf, 'm'),tail,n=1)
-  females<-as.integer(gsub('f','',females))
+  #first extract the positions of m, f and u in the string
+  positions<-data.frame(len=check$len)
+  positions$m[check$m>0]<-unlist(mapply(`[`,
+                                        sapply(check$len,seq,from=1,),
+                                        sapply(broken, `==`, 'm')))
+  positions$f[check$f>0]<-unlist(mapply(`[`,
+                                        sapply(check$len,seq,from=1,),
+                                        sapply(broken, `==`, 'f')))
+  positions$u[check$u>0]<-unlist(mapply(`[`,
+                                        sapply(check$len,seq,from=1,),
+                                        sapply(broken, `==`, 'u')))
+  positions$min<-apply(positions[,2:4], 1, min, na.rm=T)
+  positions$max<-apply(positions[,2:4], 1, max, na.rm=T)
+  positions$mid<-apply(positions[,2:6], 1, function(x){
+    res<-which(!x[1:3] %in% x[4:5])
+    res<-res[!res %in% (1:3)[is.na(x[1:3])]]
+    res<-x[1:3][res]
+    return(res)
+  })
+  positions$ascend<-apply(positions[,2:4], 1, function(x){
+    res<-diff(x[!is.na(x)])
+    res<-all(res>0)
+    return(res)
+  })
+  
+  #TODO or assign letters to numbers?
+  
+  #TODO produce output
   
   return(cbind(males,females))
 }

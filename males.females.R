@@ -11,11 +11,11 @@ males.females<-function(xxmxxf){
   #check for NAs input
   test<-sum(emptyvalues(xxmxxf))
   if(test>0){
-    print(paste('WARNING:',test,'input values are NA'))
+    cat('WARNING:',test,'input values are NA \n')
   }
   
   #check if the values are of format xxmxxfxxu
-  broken<-sapply(xxmxxf[!emptyvalues(xxmxxf)],elements,n=1)
+  broken<-sapply(as.character(xxmxxf[!emptyvalues(xxmxxf)]),elements,n=1)
   check<-data.frame(m=sapply(sapply(broken,`%in%`,c('m')),sum), #check whether the occurrence of m in string is 1
                     f=sapply(sapply(broken,`%in%`,c('f')),sum), #same for f
                     u=sapply(sapply(broken,`%in%`,c('u')),sum), #same for u
@@ -26,24 +26,29 @@ males.females<-function(xxmxxf){
   check$test.other<-check$other ==0
   check$test.len<-check$len-check$num-check$m-check$f-check$u ==0
   check$test.num.mfu<-rowSums(check[,c('m','f','u')]) <= check$num
+  check$test.num.only<-check$len==check$num
   check$result<-rowSums(check[,grep('test',colnames(check))]) !=4
   if(sum(check$result)>0){
-    print(paste('WARNING:',sum(check$result),'input value(s) do not specify males and females in format [xxmxxfxxu]:'))
+    cat('WARNING:',sum(check$result),'out of',length(xxmxxf),
+        'input value(s) do not specify males and females in format [xxmxxfxxu]: \n')
     print(xxmxxf[!is.na(xxmxxf)][check$result])
   }
   
   # extract numbers of males, females and unknown
   #first extract the positions of m, f and u in the string
   positions<-data.frame(len=check$len, m=NA, f=NA, u=NA)
-  positions$m[check$m>0]<-unlist(mapply(`[`,
-                                        sapply(check$len,seq,from=1,),
-                                        sapply(broken, `==`, 'm')))
-  positions$f[check$f>0]<-unlist(mapply(`[`,
-                                        sapply(check$len,seq,from=1,),
-                                        sapply(broken, `==`, 'f')))
-  positions$u[check$u>0]<-unlist(mapply(`[`,
-                                        sapply(check$len,seq,from=1,),
-                                        sapply(broken, `==`, 'u')))
+  positions$m<-sapply(mapply(`[`,
+                             sapply(check$len,seq,from=1,),
+                             sapply(broken, `==`, 'm')),
+                      `[`,1)
+  positions$f<-sapply(mapply(`[`,
+                             sapply(check$len,seq,from=1,),
+                             sapply(broken, `==`, 'f')),
+                      `[`,1)
+  positions$u<-sapply(mapply(`[`,
+                             sapply(check$len,seq,from=1,),
+                             sapply(broken, `==`, 'u')),
+                      `[`,1)
   #store which ones are the minimum, maximum, and middle one
   options(warn=-1)
   positions$min<-apply(positions[,2:4], 1, min, na.rm=T)

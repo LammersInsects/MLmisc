@@ -12,7 +12,7 @@
 # Define function
 write.default.xlsx<-function(dataframe,
                              filepath=NA,
-                             filename=paste(today,'debugging','xlsx',sep='.'),
+                             full.file.name=paste(today,'debugging','xlsx',sep='.'),
                              colwidths=c(),
                              extra.header.info=NA,
                              checksum.folder=checksumfolder, #can be NA to not write checksums
@@ -26,10 +26,10 @@ write.default.xlsx<-function(dataframe,
   # Check input
   #file name
   if(is.na(filepath)){
-    filepath<-filename
-    file.name<-rev(unlist(strsplit(filename, split = '/', fixed = T)))[1]
+    filepath<-full.file.name
+    file.name<-rev(unlist(strsplit(full.file.name, split = '/', fixed = T)))[1]
   } else {
-    file.name<-filename
+    file.name<-full.file.name
   }
   
   #column widths

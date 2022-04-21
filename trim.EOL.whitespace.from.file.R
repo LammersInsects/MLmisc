@@ -2,16 +2,16 @@
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
 # Define function
-trim.EOL.whitespace.from.file<-function(file,
+trim.EOL.whitespace.from.file<-function(full.file.name,
                                         overwrite=F,
                                         return.it=F,
                                         quiet=F){
   #read the lines of the file
-  if(file.exists(file)){
+  if(file.exists(full.file.name)){
     #read the file
-    ftext<-readLines(con = file, warn = F)
+    ftext<-readLines(con = full.file.name, warn = F)
   } else {
-    cat('File',file,'does not exist\n')
+    cat('File',full.file.name,'does not exist\n')
     stop()
   }
   
@@ -20,8 +20,8 @@ trim.EOL.whitespace.from.file<-function(file,
   
   #write trimmed file
   if(overwrite){
-    writeLines(ftext.trimmed, file, useBytes = T)
-    if(is.file.updated(file, seconds.before.now = 10)){
+    writeLines(ftext.trimmed, full.file.name, useBytes = T)
+    if(is.file.updated(full.file.name, seconds.before.now = 10)){
       if(!quiet){
         cat('File is successfully trimmed of all trailing spaces\n')
       }

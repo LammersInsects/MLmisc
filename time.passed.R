@@ -30,7 +30,7 @@ time.passed<-function(start, end, return.it=F){ #start and end should be timesta
   tp<-difftime(times[1], times[2])
   
   #report result
-  print(paste('Time passed:',format(tp)))
+  cat('Time passed:',format(tp),'\n')
   
   #reset digits
   options(ds)

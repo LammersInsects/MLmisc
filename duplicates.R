@@ -10,7 +10,7 @@
 # Reformat data
 
 # Define function
-duplicates<-function(dataframe, columns=c(2:4)){
+duplicates<-function(dataframe, columns=c(2:4), invert=F){
   #checks before the start
   if(!class(dataframe)=='data.frame'){
     stop('The function only works for objects of class data.frame!')
@@ -22,7 +22,11 @@ duplicates<-function(dataframe, columns=c(2:4)){
   if(ncol(dataframe)<max(columns)){
     stop('There are less columns in the dataframe than that you ask me to assess!')
   }
+  if(!class(invert)=='logical'){
+    stop('Variable invert must be set to TRUE or FALSE!')
+  }
   
+  #assess columns
   cln<-columns
   if(length(columns)>1){
     txt<-do.call(paste,dataframe[,cln])
@@ -30,10 +34,19 @@ duplicates<-function(dataframe, columns=c(2:4)){
     txt<-dataframe[,cln]
   }
   cnt<-as.data.frame(table(txt))
+  
+  #store duplicates (or singletons if requested)
   dupl<-cnt[cnt$Freq!=1,]
   test<-txt %in% dupl$txt
+  if(invert){
+    test<-!test
+    print('Full list of all singletons is returned.')
+  } else {
+    print('Full list of all duplicates is returned. Call this list with unique() to get the unique duplicates')
+  }
   res<-dataframe[test,]
-  print('Full list of all duplicates is returned. Call this list with unique() to get the unique duplicates')
+  
+  #return output
   return(res)
 }
 # res<-duplicates(dataframe = rbind(df,df[2:4,]), columns = c(2:4))

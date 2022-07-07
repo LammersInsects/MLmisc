@@ -11,8 +11,18 @@
 
 # Define function
 duplicates<-function(dataframe, columns=c(2:4)){
-  #TODO Here the script should check that there is enough columns to perform the paste with
-  #if not, check for duplicates on a single vector?
+  #checks before the start
+  if(!class(dataframe)=='data.frame'){
+    stop('The function only works for objects of class data.frame!')
+    #TODO, how to use the function for duplicates on a single vector?
+  }
+  if(!is.integer(columns)){
+    stop('Variable columns must be one or more integers!')
+  }
+  if(ncol(dataframe)<max(columns)){
+    stop('There are less columns in the dataframe than that you ask me to assess!')
+  }
+  
   cln<-columns
   if(length(columns)>1){
     txt<-do.call(paste,dataframe[,cln])

@@ -13,7 +13,9 @@
 remove.empty.columns.and.rows<-function(dataframe, do.columns=T, do.rows=T){
   df<-dataframe
   
-  if(nrow(df)>1){ #if there is only one row, the df collapses to a vector
+  if(is.null(nrow(df))){ #Check first whether it is a dataframe at all
+    df<-df[!sapply(df,emptyvalues)]
+  } else if(nrow(df)>1){ #if there is only one row, the df collapses to a vector
     
     if(do.columns){#remove empty columns
       df<-df[,!colSums(sapply(df,emptyvalues))==nrow(df)]

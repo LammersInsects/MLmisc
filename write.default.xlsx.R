@@ -98,7 +98,7 @@ write.default.xlsx<-function(dataframe,
                 titleStyle = SUB_TITLE_STYLE)
   # Add a table
   addDataFrame(dataframe, sheet, startRow=3, startColumn=1, row.names = FALSE,
-               colnamesStyle = TABLE_COLNAMES_STYLE,showNA = F,
+               colnamesStyle = TABLE_COLNAMES_STYLE, showNA = F, characterNA = NA,
                rownamesStyle = TABLE_ROWNAMES_STYLE)
   
   # Change column width

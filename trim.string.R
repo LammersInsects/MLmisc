@@ -16,6 +16,9 @@ trim.string<-function(character.vector, max.length = 100L, append.with = '[...]'
   #test whether each value is longer than the desired length
   test<-sapply(lapply(character.vector,nchar),`>`,max.length)
   
+  #if any empty values, then fill those with FALSE
+  test[emptyvalues(test)]<-F
+  
   #produce output
   result<-character.vector
   if(any(test)){
